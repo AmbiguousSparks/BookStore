@@ -7,6 +7,13 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
+  </component>
   <component name="GitSEFilterConfiguration">
     <file-type-list>
       <filtered-out-file-type name="LOCAL_BRANCH" />
@@ -15,12 +22,22 @@
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
   </component>
+  <component name="GithubProjectSettings">
+    <option name="branchProtectionPatterns">
+      <list>
+        <option value="master" />
+      </list>
+    </option>
+  </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/39ba89a0a4d04824bcfb478a6f5d101e30800/b9/4a0be2dd/SpecimenFactory`1.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/2e5a78beee0f4abd8ed7ef3636048cf1a20268/34/6fb71c10/Exception.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/39ba89a0a4d04824bcfb478a6f5d101e30800/21/40b5c7c4/TerminatingWithPathSpecimenBuilder.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/39ba89a0a4d04824bcfb478a6f5d101e30800/f1/68973bf1/Postprocessor`1.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/danie/RiderProjects/BookStore/BookStore.Domain/Common/Exceptions/PropertyNullException.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/danie/RiderProjects/BookStore/BookStore.Domain/Common/Models/Entity.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/39ba89a0a4d04824bcfb478a6f5d101e30800/aa/c18cda06/Fixture.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/danie/RiderProjects/BookStore/BookStore.Domain/Models/Book.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/39ba89a0a4d04824bcfb478a6f5d101e30800/1c/43e845cd/NoSpecimenOutputGuard.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/2e5a78beee0f4abd8ed7ef3636048cf1a20268/b1/bf329635/String.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/2e5a78beee0f4abd8ed7ef3636048cf1a20268/79/bb3ecb78/StringBuilder.cs" root0="SKIP_HIGHLIGHTING" />
@@ -47,7 +64,6 @@
     <property name="settings.editor.selected.configurable" value="RiderUnitTestingPageId" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
-  <component name="RunManager" selected="7dc1891c-e8e4-44b3-a686-a52b2182289b" />
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -85,23 +101,7 @@
     <option name="sortedColumn" value="1" />
     <option name="symbolColumnWidth" value="178" />
     <coverage-tree-state>
-      <expand>
-        <path>
-          <item name="rootNode" type="c53c71d1:RiderDotCoverCoverageTreeModel$RootNode" />
-          <item name="Total 84% 29/176" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-        </path>
-        <path>
-          <item name="rootNode" type="c53c71d1:RiderDotCoverCoverageTreeModel$RootNode" />
-          <item name="Total 84% 29/176" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-          <item name="BookStore.Domain 82% 24/131" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-        </path>
-        <path>
-          <item name="rootNode" type="c53c71d1:RiderDotCoverCoverageTreeModel$RootNode" />
-          <item name="Total 84% 29/176" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-          <item name="BookStore.Domain 82% 24/131" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-          <item name="BookStore.Domain 82% 24/131" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-        </path>
-      </expand>
+      <expand />
       <select />
     </coverage-tree-state>
   </component>
