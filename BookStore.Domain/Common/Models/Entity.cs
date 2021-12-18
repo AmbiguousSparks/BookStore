@@ -4,7 +4,7 @@ using BookStore.Domain.Common.Models.Interfaces;
 
 namespace BookStore.Domain.Common.Models;
 
-public abstract class Entity<TClass, TId> : IEntity<TId>
+public abstract class Entity<TClass, TId> : IEntity
 {
     public TId Id { get; } = default!;
 
