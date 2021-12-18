@@ -1,6 +1,5 @@
 namespace BookStore.Domain.Common.Models.Interfaces;
 
-public interface IEntity<out TId>
+public interface IEntity
 {
-    public TId Id { get; }
 }
