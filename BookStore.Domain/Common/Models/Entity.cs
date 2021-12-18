@@ -19,8 +19,8 @@ public abstract class Entity<TClass, TId> : IEntity<TId>
     }
 
     protected T ValidateNull<T>(T property, [CallerMemberName] string name = "") =>
-        property ?? throw PropertyNullException.Throw(name, _className);
+        property ?? throw PropertyNullException.Throw(_className, name);
 
     protected string ValidateNullOrEmpty(string property, [CallerMemberName] string name = "") =>
-        string.IsNullOrEmpty(property) ? throw PropertyNullException.Throw(name, _className) : property;
+        string.IsNullOrEmpty(property) ? throw PropertyNullException.Throw(_className, name) : property;
 }

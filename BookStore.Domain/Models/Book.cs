@@ -68,14 +68,15 @@ public class Book : Entity<Book, int>
     {
     }
 
-    public Book(int id, string title, string description, string isbn, Author author, string language, Category category, DateOnly releaseDate, BookCoverType coverType, int edition, decimal price) : base(id)
+    public Book(int id, string title, string description, string isbn, Author author, string language, Category category, DateOnly releaseDate, BookCoverType coverType, int edition, decimal price) 
+        : base(id)
     {
-        _title = title;
-        _description = description;
-        _isbn = isbn;
-        _author = author;
-        _language = language;
-        _category = category;
+        Title = title;
+        Description = description;
+        Isbn = isbn;
+        Author = author;
+        Language = language;
+        Category = category;
         ReleaseDate = releaseDate;
         CoverType = coverType;
         Edition = edition;
@@ -83,13 +84,14 @@ public class Book : Entity<Book, int>
     }
 
     public Book(string title, string description, string isbn, Author author, string language, Category category, DateOnly releaseDate, BookCoverType coverType, int edition, decimal price)
+        : this()
     {
-        _title = title;
-        _description = description;
-        _isbn = isbn;
-        _author = author;
-        _language = language;
-        _category = category;
+        Title = title;
+        Description = description;
+        Isbn = isbn;
+        Author = author;
+        Language = language;
+        Category = category;
         ReleaseDate = releaseDate;
         CoverType = coverType;
         Edition = edition;

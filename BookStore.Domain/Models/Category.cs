@@ -7,7 +7,7 @@ public class Category : Entity<Category, int>
     
     #region Fields
 
-    private string _categoryName;
+    private string _categoryName = default!;
 
     public string CategoryName
     {
@@ -17,13 +17,11 @@ public class Category : Entity<Category, int>
 
     #endregion
 
-    #region Properties
-
-    public IEnumerable<Book> Books { get; set; } = default!;
-
-    #endregion
-
     #region Constructors
+
+    private Category()
+    {
+    }
     
     public Category(int id, string categoryName) : base(id)
     {
@@ -31,8 +29,9 @@ public class Category : Entity<Category, int>
     }
 
     public Category(string categoryName)
+        : this()
     {
-        _categoryName = categoryName;
+        CategoryName = categoryName;
     }
 
     #endregion

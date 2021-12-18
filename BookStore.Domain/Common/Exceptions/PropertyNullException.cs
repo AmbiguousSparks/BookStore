@@ -15,11 +15,11 @@ public class PropertyNullException : DomainException
     private static string BuildMessage(string className, string propertyName)
     {
         var sb = new StringBuilder();
-        sb.Append("Propriedade ");
+        sb.Append("Property ");
         sb.Append(propertyName);
-        sb.Append("Da classe ");
+        sb.Append(" From class ");
         sb.Append(className);
-        sb.Append("é obrigatória");
+        sb.Append(" is required");
 
         return sb.ToString();
     }

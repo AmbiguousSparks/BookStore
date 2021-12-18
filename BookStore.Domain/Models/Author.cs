@@ -20,12 +20,14 @@ public class Author : Entity<Author, int>
 
     public DateOnly BirthDate { get; set; } = default!;
 
-    public IEnumerable<Book> Books { get; set; } = default!;
-
     #endregion
 
     #region Constructors
 
+    private Author()
+    {
+    }
+    
     public Author(int id, string name, DateOnly birthDate) : base(id)
     {
         Name = name;
@@ -33,6 +35,7 @@ public class Author : Entity<Author, int>
     }
 
     public Author(string name, DateOnly birthDate)
+        : this()
     {
         Name = name;
         BirthDate = birthDate;

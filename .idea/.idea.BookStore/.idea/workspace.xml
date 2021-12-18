@@ -16,7 +16,12 @@
     </file-type-list>
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/39ba89a0a4d04824bcfb478a6f5d101e30800/b9/4a0be2dd/SpecimenFactory`1.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/2e5a78beee0f4abd8ed7ef3636048cf1a20268/34/6fb71c10/Exception.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/39ba89a0a4d04824bcfb478a6f5d101e30800/21/40b5c7c4/TerminatingWithPathSpecimenBuilder.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/39ba89a0a4d04824bcfb478a6f5d101e30800/f1/68973bf1/Postprocessor`1.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/39ba89a0a4d04824bcfb478a6f5d101e30800/aa/c18cda06/Fixture.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/39ba89a0a4d04824bcfb478a6f5d101e30800/1c/43e845cd/NoSpecimenOutputGuard.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/2e5a78beee0f4abd8ed7ef3636048cf1a20268/b1/bf329635/String.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/2e5a78beee0f4abd8ed7ef3636048cf1a20268/79/bb3ecb78/StringBuilder.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
@@ -32,15 +37,17 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="GitStage.ChangesTree.GroupingKeys" value="repository" />
+    <property name="GitStage.ChangesTree.GroupingKeys" value="repository&#10;directory" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="settings.editor.selected.configurable" value="reference.settings.ide.settings.spelling" />
+    <property name="settings.editor.selected.configurable" value="RiderUnitTestingPageId" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
+  <component name="RunManager" selected="7dc1891c-e8e4-44b3-a686-a52b2182289b" />
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -49,7 +56,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1639855686146</updated>
-      <workItem from="1639855693687" duration="4029000" />
+      <workItem from="1639855693687" duration="6333000" />
+      <workItem from="1639862501200" duration="1257000" />
     </task>
     <task id="LOCAL-00001" summary="Criando primeiras classes de domínio.">
       <created>1639858372303</created>
@@ -58,11 +66,44 @@
       <option name="project" value="LOCAL" />
       <updated>1639858372303</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Implementando primeiras entidades.">
+      <created>1639859820107</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1639859820107</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="UnitTestsCoverage.Settings">
+    <option name="coveragePercentColumnWidth" value="150" />
+    <option name="sortOrder" value="DESCENDING" />
+    <option name="sortedColumn" value="1" />
+    <option name="symbolColumnWidth" value="178" />
+    <coverage-tree-state>
+      <expand>
+        <path>
+          <item name="rootNode" type="c53c71d1:RiderDotCoverCoverageTreeModel$RootNode" />
+          <item name="Total 84% 29/176" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+        </path>
+        <path>
+          <item name="rootNode" type="c53c71d1:RiderDotCoverCoverageTreeModel$RootNode" />
+          <item name="Total 84% 29/176" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="BookStore.Domain 82% 24/131" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+        </path>
+        <path>
+          <item name="rootNode" type="c53c71d1:RiderDotCoverCoverageTreeModel$RootNode" />
+          <item name="Total 84% 29/176" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="BookStore.Domain 82% 24/131" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="BookStore.Domain 82% 24/131" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+        </path>
+      </expand>
+      <select />
+    </coverage-tree-state>
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -78,6 +119,26 @@
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <MESSAGE value="Criando primeiras classes de domínio." />
-    <option name="LAST_COMMIT_MESSAGE" value="Criando primeiras classes de domínio." />
+    <MESSAGE value="Implementando primeiras entidades." />
+    <option name="LAST_COMMIT_MESSAGE" value="Implementando primeiras entidades." />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/BookStore.Domain/Models/Author.cs</url>
+          <line>38</line>
+          <properties documentPath="C:\Users\danie\RiderProjects\BookStore\BookStore.Domain\Models\Author.cs" initialLine="33" containingFunctionPresentation="constructor 'Author'">
+            <startOffsets>
+              <option value="678" />
+            </startOffsets>
+            <endOffsets>
+              <option value="679" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
