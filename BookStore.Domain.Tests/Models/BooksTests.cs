@@ -21,6 +21,7 @@ public class BooksTests
         var author = _fixture.Build<Author>()
             .FromFactory(() => new Author("Daniel", new DateOnly(2000, 8, 23)))
             .With(a => a.Name, "Daniel")
+            .With(b => b.BirthDate, new DateOnly(2000, 8, 23))
             .Create();
 
         var category = _fixture.Build<Category>()
@@ -56,6 +57,7 @@ public class BooksTests
         var author = _fixture.Build<Author>()
             .FromFactory(() => new Author(1, "Daniel", new DateOnly(2000, 8, 23)))
             .With(a => a.Name, "Daniel")
+            .With(b => b.BirthDate, new DateOnly(2000, 8, 23))
             .Create();
 
         var category = _fixture.Build<Category>()
@@ -92,6 +94,7 @@ public class BooksTests
         var author = _fixture.Build<Author>()
             .FromFactory(() => new Author("Daniel", new DateOnly(2000, 8, 23)))
             .With(a => a.Name, "Daniel")
+            .With(b => b.BirthDate, new DateOnly(2000, 8, 23))
             .Create();
 
         var category = _fixture.Build<Category>()
