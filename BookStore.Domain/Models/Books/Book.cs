@@ -59,11 +59,11 @@ public class Book : Entity<Book, int>
 
     #region Properties
 
-    public DateOnly ReleaseDate { get; set; } = default!;
+    public DateOnly ReleaseDate { get; set; }
 
-    public BookCoverType CoverType { get; set; } = default!;
+    public BookCoverType CoverType { get; set; }
     
-    public int Edition { get; set; } = default!;
+    public int Edition { get; set; }
 
 
     #endregion

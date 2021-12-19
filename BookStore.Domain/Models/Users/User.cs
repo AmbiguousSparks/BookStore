@@ -40,7 +40,7 @@ public class User : Entity<User, int>
 
     #region Properties
 
-    public UserType Type { get; set; } = default!;
+    public UserType Type { get; set; }
 
     #endregion
 

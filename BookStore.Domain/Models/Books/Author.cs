@@ -18,7 +18,7 @@ public class Author : Entity<Author, int>
 
     #region Properties
 
-    public DateOnly BirthDate { get; set; } = default!;
+    public DateOnly BirthDate { get; set; }
 
     #endregion
 
