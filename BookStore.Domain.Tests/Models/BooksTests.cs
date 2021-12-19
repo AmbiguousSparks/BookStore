@@ -2,7 +2,7 @@ using System;
 using AutoFixture;
 using BookStore.Domain.Common.Exceptions;
 using BookStore.Domain.Events.Interfaces;
-using BookStore.Domain.Models;
+using BookStore.Domain.Models.Books;
 using BookStore.Domain.Models.Enums;
 using FluentAssertions;
 using NSubstitute;

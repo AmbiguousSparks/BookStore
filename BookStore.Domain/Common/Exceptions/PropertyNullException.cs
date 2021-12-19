@@ -10,7 +10,7 @@ public class PropertyNullException : DomainException
     }
 
     public static PropertyNullException Throw(string className, string propertyName) =>
-        new PropertyNullException(BuildMessage(className, propertyName));
+        new(BuildMessage(className, propertyName));
 
     private static string BuildMessage(string className, string propertyName)
     {

@@ -7,7 +7,7 @@ using MediatR;
 using NSubstitute;
 using Xunit;
 
-namespace BooksStore.Application.Tests.Extensions;
+namespace BookStore.Application.Tests.Extensions;
 
 public class MediatorExtensionsTests
 {

@@ -6,7 +6,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookStore.Domain.Tests", "B
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookStore.Application", "BookStore.Application\BookStore.Application.csproj", "{091127E4-5C32-4011-AE2A-AF131C2D349F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BooksStore.Application.Tests", "BooksStore.Application.Tests\BooksStore.Application.Tests.csproj", "{3174AAB5-2993-4B0D-974C-B69C7C70A8F9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookStore.Application.Tests", "BookStore.Application.Tests\BookStore.Application.Tests.csproj", "{3174AAB5-2993-4B0D-974C-B69C7C70A8F9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

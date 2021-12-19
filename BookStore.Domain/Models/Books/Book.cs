@@ -1,7 +1,7 @@
 using BookStore.Domain.Common.Models;
 using BookStore.Domain.Models.Enums;
 
-namespace BookStore.Domain.Models;
+namespace BookStore.Domain.Models.Books;
 
 public class Book : Entity<Book, int>
 {
@@ -13,7 +13,8 @@ public class Book : Entity<Book, int>
     private Author _author = default!;
     private string _language = default!;
     private Category _category = default!;
-
+    private decimal _price;
+    
     public Category Category
     {
         get => _category;
@@ -40,25 +41,30 @@ public class Book : Entity<Book, int>
     public string Isbn
     {
         get => _isbn;
-        private set => _isbn = ValidateNullOrEmpty(value);
+        set => _isbn = ValidateNullOrEmpty(value);
     }
     public string Language
     {
         get => _language;
-        private set => _language = ValidateNullOrEmpty(value);
+        set => _language = ValidateNullOrEmpty(value);
+    }
+
+    public decimal Price
+    {
+        get => _price;
+        set => _price = ValidateZero(value);
     }
 
     #endregion
 
     #region Properties
 
-    public DateOnly ReleaseDate { get; set; } = default!;
+    public DateOnly ReleaseDate { get; set; }
 
-    public BookCoverType CoverType { get; set; } = default!;
+    public BookCoverType CoverType { get; set; }
     
-    public int Edition { get; set; } = default!;
+    public int Edition { get; set; }
 
-    public decimal Price { get; set; } = default!;
 
     #endregion
 

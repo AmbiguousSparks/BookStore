@@ -5,7 +5,7 @@ using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
-namespace BooksStore.Application.Tests.Extensions;
+namespace BookStore.Application.Tests.Extensions;
 
 public class ApplicationExtensionsTests
 {

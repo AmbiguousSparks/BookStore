@@ -29,6 +29,15 @@ public abstract class Entity<TClass, TId> : IEntity
     protected T ValidateNull<T>(T property, [CallerMemberName] string name = "") =>
         property ?? throw PropertyNullException.Throw(_className, name);
 
+    protected decimal ValidateZero(decimal value, [CallerMemberName] string name = "") =>
+        value > decimal.Zero ? value : throw PropertyNullException.Throw(_className, name);
+    
+    protected int ValidateZero(int value, [CallerMemberName] string name = "") =>
+        value > 0 ? value : throw PropertyNullException.Throw(_className, name);
+    
+    protected int ValidateNegative(int value, [CallerMemberName] string name = "") =>
+        value > -1 ? value : throw PropertyNullException.Throw(_className, name);
+
     protected string ValidateNullOrEmpty(string property, [CallerMemberName] string name = "") =>
         string.IsNullOrEmpty(property) ? throw PropertyNullException.Throw(_className, name) : property;
 }

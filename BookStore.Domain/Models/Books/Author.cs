@@ -1,6 +1,6 @@
 using BookStore.Domain.Common.Models;
 
-namespace BookStore.Domain.Models;
+namespace BookStore.Domain.Models.Books;
 
 public class Author : Entity<Author, int>
 {
@@ -18,7 +18,7 @@ public class Author : Entity<Author, int>
 
     #region Properties
 
-    public DateOnly BirthDate { get; set; } = default!;
+    public DateOnly BirthDate { get; set; }
 
     #endregion
 
