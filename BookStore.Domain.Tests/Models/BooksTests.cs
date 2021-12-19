@@ -1,9 +1,11 @@
 using System;
 using AutoFixture;
 using BookStore.Domain.Common.Exceptions;
+using BookStore.Domain.Events.Interfaces;
 using BookStore.Domain.Models;
 using BookStore.Domain.Models.Enums;
 using FluentAssertions;
+using NSubstitute;
 using Xunit;
 
 namespace BookStore.Domain.Tests.Models;
@@ -116,6 +118,106 @@ public class BooksTests
             .WithMessage("Property Title from class Book is required");
 
     }
+
+    #endregion
+
+    #region Events
+
+    [Fact]
+    public void AddDomainEvent_ShouldAddNewEvent()
+    {
+        //Arrange
+        var author = _fixture.Build<Author>()
+            .FromFactory(() => new Author("Daniel", new DateOnly(2000, 8, 23)))
+            .With(a => a.Name, "Daniel")
+            .With(b => b.BirthDate, new DateOnly(2000, 8, 23))
+            .Create();
+
+        var category = _fixture.Build<Category>()
+            .FromFactory(() => new Category("Action"))
+            .With(c => c.CategoryName, "Action")
+            .Create();
+
+        const string title = "Test Book", description = "Just a Test Book", language = "Portuguese", isbn = "978-855500";
+        
+        var book = new Book(title, description, isbn, author, language,
+            category, new DateOnly(2021, 12, 18),
+            BookCoverType.Common, 1, 29.99m);
+
+        var @event = Substitute.For<IDomainEvent>();
+
+        //Act
+        book.AddDomainEvent(@event);
+
+        //Assert
+        book.GetEvents().Should().Contain(@event);
+    }
+    
+    [Fact]
+    public void RemoveDomainEvent_ShouldRemoveEvent()
+    {
+        //Arrange
+        var author = _fixture.Build<Author>()
+            .FromFactory(() => new Author("Daniel", new DateOnly(2000, 8, 23)))
+            .With(a => a.Name, "Daniel")
+            .With(b => b.BirthDate, new DateOnly(2000, 8, 23))
+            .Create();
+
+        var category = _fixture.Build<Category>()
+            .FromFactory(() => new Category("Action"))
+            .With(c => c.CategoryName, "Action")
+            .Create();
+
+        const string title = "Test Book", description = "Just a Test Book", language = "Portuguese", isbn = "978-855500";
+        
+        var book = new Book(title, description, isbn, author, language,
+            category, new DateOnly(2021, 12, 18),
+            BookCoverType.Common, 1, 29.99m);
+
+        var @event = Substitute.For<IDomainEvent>();
+        book.AddDomainEvent(@event);
+
+        //Act
+        book.RemoveDomainEvent(@event);
+        
+        //Assert
+        book.GetEvents().Should().BeEmpty();
+    }
+    
+    [Fact]
+    public void GetEvents_ShouldReturnEvents()
+    {
+        //Arrange
+        var author = _fixture.Build<Author>()
+            .FromFactory(() => new Author("Daniel", new DateOnly(2000, 8, 23)))
+            .With(a => a.Name, "Daniel")
+            .With(b => b.BirthDate, new DateOnly(2000, 8, 23))
+            .Create();
+
+        var category = _fixture.Build<Category>()
+            .FromFactory(() => new Category("Action"))
+            .With(c => c.CategoryName, "Action")
+            .Create();
+
+        const string title = "Test Book", description = "Just a Test Book", language = "Portuguese", isbn = "978-855500";
+        
+        var book = new Book(title, description, isbn, author, language,
+            category, new DateOnly(2021, 12, 18),
+            BookCoverType.Common, 1, 29.99m);
+
+        var @event1 = Substitute.For<IDomainEvent>();
+        var @event2 = Substitute.For<IDomainEvent>();
+        
+        book.AddDomainEvent(@event1);
+        book.AddDomainEvent(@event2);
+        
+        //Act
+        var events = book.GetEvents();
+        
+        //Assert
+        events.Should().HaveCount(2);
+    }
+    
 
     #endregion
 }
