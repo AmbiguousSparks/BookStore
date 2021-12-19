@@ -4,7 +4,7 @@ using Microsoft.Extensions.Logging;
 
 namespace BookStore.Application.Pipelines;
 
-public class LoggerPipeline<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> 
+public class LoggerPipeline<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     where TRequest : notnull
 {
     private readonly ILogger<LoggerPipeline<TRequest, TResponse>> _logger;
@@ -14,7 +14,8 @@ public class LoggerPipeline<TRequest, TResponse> : IPipelineBehavior<TRequest, T
         _logger = logger;
     }
 
-    public Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
+    public Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken,
+        RequestHandlerDelegate<TResponse> next)
     {
         _logger.RequestStartedLog(typeof(TRequest).Name, request);
 
