@@ -1,8 +1,11 @@
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using BookStore.Application.Profiles;
 using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+
+[assembly: InternalsVisibleTo("BookStore.Application.Tests")]
 
 namespace BookStore.Application.Extensions;
 
