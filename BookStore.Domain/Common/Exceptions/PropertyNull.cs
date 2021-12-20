@@ -2,15 +2,12 @@ using System.Text;
 
 namespace BookStore.Domain.Common.Exceptions;
 
-public class PropertyNullException : DomainException
+public class PropertyNullException : Exception, IValidationError
 {
-    private PropertyNullException(string message)
-        : base(message)
+    public PropertyNullException(string className, string propertyName)
     {
+        Error = BuildMessage(className, propertyName);
     }
-
-    public static PropertyNullException Throw(string className, string propertyName) =>
-        new(BuildMessage(className, propertyName));
 
     private static string BuildMessage(string className, string propertyName)
     {
@@ -23,4 +20,6 @@ public class PropertyNullException : DomainException
 
         return sb.ToString();
     }
+
+    public string Error { get; }
 }

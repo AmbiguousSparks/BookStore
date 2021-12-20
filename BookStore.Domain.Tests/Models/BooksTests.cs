@@ -114,8 +114,8 @@ public class BooksTests
 
         //Assert
         act.Should()
-            .Throw<PropertyNullException>()
-            .WithMessage("Property Title from class Book is required");
+            .Throw<ArgumentNullException>()
+            .WithMessage("Value cannot be null. (Parameter 'Title')");
 
     }
 

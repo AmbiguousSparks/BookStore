@@ -2,15 +2,12 @@ using System.Text;
 
 namespace BookStore.Domain.Common.Exceptions;
 
-public class EntityAlreadyExistsException : DomainException
+public class EntityAlreadyExists : Exception, IValidationError
 {
-    private EntityAlreadyExistsException(string message) : base(message)
+    public EntityAlreadyExists(string className)
     {
+        Error = BuildMessage(className);
     }
-
-    public static EntityAlreadyExistsException Throw(string className) =>
-        new(BuildMessage(className));
-    
     
     private static string BuildMessage(string className)
     {
@@ -19,4 +16,6 @@ public class EntityAlreadyExistsException : DomainException
         sb.Append(" Already exists");
         return sb.ToString();
     }
+
+    public string Error { get; }
 }
