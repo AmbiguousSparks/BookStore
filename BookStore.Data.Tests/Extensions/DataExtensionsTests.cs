@@ -23,7 +23,7 @@ public class DataExtensionsTests
 
         var configurationSection = Substitute.For<IConfigurationSection>();
 
-        configurationSection[Arg.Any<string>()].ReturnsForAnyArgs("test connection");
+        configurationSection[Arg.Any<string>()].ReturnsForAnyArgs("Data Source=MyDb.db");
         
         _configuration
             .GetSection("ConnectionStrings").Returns(configurationSection);
@@ -46,7 +46,7 @@ public class DataExtensionsTests
         // Arrange
         var configurationSection = Substitute.For<IConfigurationSection>();
 
-        configurationSection[Arg.Any<string>()].ReturnsForAnyArgs("test connection");
+        configurationSection[Arg.Any<string>()].ReturnsForAnyArgs("Data Source=MyDb.db");
         
         _configuration
             .GetSection("ConnectionStrings").Returns(configurationSection);
