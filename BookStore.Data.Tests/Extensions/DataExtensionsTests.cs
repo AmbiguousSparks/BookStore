@@ -1,5 +1,8 @@
+using System;
 using BookStore.Application.Common.Interfaces;
 using BookStore.Data.Extensions;
+using BookStore.Domain.Common.Repositories.Interfaces;
+using BookStore.Domain.Models.Users;
 using FluentAssertions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,7 +17,7 @@ public class DataExtensionsTests
     private readonly IServiceCollection _services = new ServiceCollection();
     
     [Fact]
-    public void AddData_ShouldAddDbContext()
+    public void AddDbContext_ShouldAddDbContext()
     {
         //Arrange
 
@@ -26,10 +29,35 @@ public class DataExtensionsTests
             .GetSection("ConnectionStrings").Returns(configurationSection);
 
         //Act
-        _services.AddData(_configuration);
+        _services.AddDbContext(_configuration);
 
         //Assert
         var dbContext = _services.BuildServiceProvider().GetService<IBookStoreDbContext>();
         dbContext.Should().NotBeNull();
+    }
+    
+    //Arrange
+    [Theory]
+    [InlineData(typeof(IRepository<User>))]
+    [InlineData(typeof(IListRepository<User>))]
+    [InlineData(typeof(IPaginationRepository<User>))]
+    public void AddRepositories_ShouldAddRepositories(Type repositoryType)
+    { 
+        // Arrange
+        var configurationSection = Substitute.For<IConfigurationSection>();
+
+        configurationSection[Arg.Any<string>()].ReturnsForAnyArgs("test connection");
+        
+        _configuration
+            .GetSection("ConnectionStrings").Returns(configurationSection);
+        
+        _services.AddDbContext(_configuration);
+        
+        //Act
+        _services.AddAllRepositories();
+
+        //Assert
+        var repository = _services.BuildServiceProvider().GetService(repositoryType);
+        repository.Should().NotBeNull();
     }
 }
