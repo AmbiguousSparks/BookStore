@@ -34,13 +34,14 @@ public class CreateUserCommandHandlerTest
         var handler = new CreateUserCommand.CreateUserCommandHandler(_mapper, _repository, _mediator);
 
         //Act
-        await handler.Handle(new CreateUserCommand(), CancellationToken.None);
+        var response = await handler.Handle(new CreateUserCommand(), CancellationToken.None);
 
         //Assert
         _mapper.ReceivedWithAnyArgs(1).Map<User>(Arg.Any<CreateUserCommand>());
         await _repository.ReceivedWithAnyArgs(1).Exists(Arg.Any<Expression<Func<User, bool>>>());
         await _repository.ReceivedWithAnyArgs(1).Create(Arg.Any<User>());
         await _mediator.ReceivedWithAnyArgs(1).DispatchDomainEvents(user);
+        response.Value.Should().BeAssignableTo<Unit>();
     }
 
     [Fact]
@@ -51,25 +52,19 @@ public class CreateUserCommandHandlerTest
         var user = new User("Daniel",
             "Santos", "daniel@gmail.com", "Teste@password123", UserType.Default);
         _mapper.Map<User>(Arg.Any<CreateUserCommand>()).Returns(user);
-    
-        var act = async () =>
-        {
-            var handler =
-                new CreateUserCommand.CreateUserCommandHandler(_mapper, _repository, _mediator);
-            
-            return await handler.Handle(new CreateUserCommand(),
-                CancellationToken.None);
-        };
-    
-    
+
+        var handler =
+            new CreateUserCommand.CreateUserCommandHandler(_mapper, _repository, _mediator);
+
         //Act
-        await act.Should().ThrowAsync<EntityAlreadyExistsException>()
-            .WithMessage("User already exists");
-    
+        var response = await handler.Handle(new CreateUserCommand(), CancellationToken.None);
+
+
         //Assert
         _mapper.DidNotReceiveWithAnyArgs().Map<User>(Arg.Any<CreateUserCommand>());
         await _repository.ReceivedWithAnyArgs(1).Exists(Arg.Any<Expression<Func<User, bool>>>());
         await _repository.DidNotReceiveWithAnyArgs().Create(Arg.Any<User>());
         await _mediator.DidNotReceiveWithAnyArgs().DispatchDomainEvents(user);
+        response.Value.Should().BeAssignableTo<EntityAlreadyExists>();
     }
 }

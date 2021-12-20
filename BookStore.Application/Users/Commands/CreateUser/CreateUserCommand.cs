@@ -7,15 +7,16 @@ using BookStore.Domain.Common.Repositories.Interfaces;
 using BookStore.Domain.Models.Enums;
 using BookStore.Domain.Models.Users;
 using MediatR;
+using OneOf;
 
 namespace BookStore.Application.Users.Commands.CreateUser;
 
-public class CreateUserCommand : UserDto, IRequest
+public class CreateUserCommand : UserDto, IRequest<OneOf<Unit, InvalidProperty, EntityAlreadyExists>>
 {
     public string ConfirmPassword { get; set; } = default!;
     public UserType Type { get; set; }
     
-    internal class CreateUserCommandHandler : IRequestHandler<CreateUserCommand>
+    internal class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, OneOf<Unit, InvalidProperty, EntityAlreadyExists>>
     {
         private readonly IMapper _mapper;
         private readonly IRepository<User> _userRepository;
@@ -28,24 +29,31 @@ public class CreateUserCommand : UserDto, IRequest
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
 
-        public async Task<Unit> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+        public async Task<OneOf<Unit, InvalidProperty, EntityAlreadyExists>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
-            var userExists = await _userRepository.Exists(u => u.Email == request.Email, cancellationToken);
-            
-            if(userExists)
-                throw EntityAlreadyExistsException.Throw("User");
+            try
+            {
+                var userExists = await _userRepository.Exists(u => u.Email == request.Email, cancellationToken);
 
-            request.Type = UserType.Default;
-            
-            var userModel = _mapper.Map<User>(request);
-            
-            userModel.AddDomainEvent(new UserCreatedEvent());
+                if (userExists)
+                    return new EntityAlreadyExists(nameof(User));
 
-            await _userRepository.Create(userModel, cancellationToken);
+                request.Type = UserType.Default;
 
-            await _mediator.DispatchDomainEvents(userModel);
-            
-            return Unit.Value;
+                var userModel = _mapper.Map<User>(request);
+
+                userModel.AddDomainEvent(new UserCreatedEvent());
+
+                await _userRepository.Create(userModel, cancellationToken);
+
+                await _mediator.DispatchDomainEvents(userModel);
+
+                return Unit.Value;
+            }
+            catch (ArgumentNullException e)
+            {
+                return new InvalidProperty(nameof(User), e.Message);
+            }
         }
     }
 }
