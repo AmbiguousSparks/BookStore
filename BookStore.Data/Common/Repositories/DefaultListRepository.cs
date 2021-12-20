@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BookStore.Data.Common.Repositories;
 
-internal class DefaultListRepository<TEntity> : Repository, IListRepository<TEntity>
+internal class DefaultListRepository<TEntity> : Repository<TEntity>, IListRepository<TEntity>
     where TEntity : class, IEntity
 {
     public DefaultListRepository(IBookStoreDbContext dbContext)
@@ -17,14 +17,14 @@ internal class DefaultListRepository<TEntity> : Repository, IListRepository<TEnt
 
     public async Task<IEnumerable<TEntity>> GetAll(CancellationToken cancellationToken = default)
     {
-        return await DbContext.Set<TEntity>()
+        return await All()
             .ToListAsync(cancellationToken);
     }
 
     public async Task<IEnumerable<TEntity>> GetAll(Expression<Func<TEntity, bool>> condition,
         CancellationToken cancellationToken = default)
     {
-        return await DbContext.Set<TEntity>()
+        return await All()
             .Where(condition)
             .ToListAsync(cancellationToken);
     }

@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BookStore.Data.Common.Repositories;
 
-internal class DefaultRepository<TEntity> : Repository, IRepository<TEntity>
+internal class DefaultRepository<TEntity> : Repository<TEntity>, IRepository<TEntity>
     where TEntity : class, IEntity
 {
     public DefaultRepository(IBookStoreDbContext dbContext)
@@ -17,7 +17,7 @@ internal class DefaultRepository<TEntity> : Repository, IRepository<TEntity>
 
     public async Task Create(TEntity entity, CancellationToken cancellationToken = default)
     {
-        await DbContext.Set<TEntity>()
+        await All()
             .AddAsync(entity, cancellationToken);
 
         await DbContext.SaveChangesAsync(cancellationToken);
@@ -25,11 +25,16 @@ internal class DefaultRepository<TEntity> : Repository, IRepository<TEntity>
 
     public ValueTask<TEntity> Get(int id, CancellationToken cancellationToken = default)
     {
-        return DbContext.Set<TEntity>().FindAsync(new object?[] { id }, cancellationToken: cancellationToken)!;
+        return All().FindAsync(new object?[] { id }, cancellationToken: cancellationToken)!;
+    }
+
+    public Task<TEntity> Get(Expression<Func<TEntity, bool>> condition, CancellationToken cancellationToken = default)
+    {
+        return All().FirstAsync(condition, cancellationToken: cancellationToken);
     }
 
     public Task<bool> Exists(Expression<Func<TEntity, bool>> condition, CancellationToken cancellationToken = default)
     {
-        return DbContext.Set<TEntity>().AnyAsync(condition, cancellationToken);
+        return All().AnyAsync(condition, cancellationToken);
     }
 }
