@@ -19,6 +19,9 @@ public static class DataExtensions
             .AddDbContext(configuration)
             .AddRepositories();
 
+    public static IHealthChecksBuilder AddDataHealthCheck(this IHealthChecksBuilder checks) =>
+        checks.AddDbContextCheck<BookStoreDbContext>();
+    
     internal static IServiceCollection AddDbContext(this IServiceCollection services, IConfiguration configuration)
     {
         services
