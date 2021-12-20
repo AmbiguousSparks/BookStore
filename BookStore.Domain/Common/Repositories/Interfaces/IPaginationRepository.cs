@@ -4,11 +4,11 @@ using BookStore.Domain.Common.Models.Interfaces;
 
 namespace BookStore.Domain.Common.Repositories.Interfaces;
 
-public interface IPaginationRepository<T> : IRepository<T>
+public interface IPaginationRepository<T>
     where T : IEntity
 {
-    Task<PaginationInfo<T>> GetPaged(CancellationToken cancellationToken = default);
+    Task<PaginationInfo<T>> GetPaged(int page, int pageSize, CancellationToken cancellationToken = default);
 
-    Task<PaginationInfo<T>> GetPaged(Expression<Func<T, bool>> condition,
+    Task<PaginationInfo<T>> GetPaged(int page, int pageSize, Expression<Func<T, bool>> condition,
         CancellationToken cancellationToken = default);
 }
