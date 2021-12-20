@@ -27,17 +27,17 @@ public abstract class Entity<TClass, TId> : IEntity
     public IEnumerable<IDomainEvent> GetEvents() => _domainEvents;
 
     protected T ValidateNull<T>(T property, [CallerMemberName] string name = "") =>
-        property ?? throw PropertyNullException.Throw(_className, name);
+        property ?? throw new ArgumentNullException(name);
 
     protected decimal ValidateZero(decimal value, [CallerMemberName] string name = "") =>
-        value > decimal.Zero ? value : throw PropertyNullException.Throw(_className, name);
+        value > decimal.Zero ? value : throw new ArgumentNullException(name);
     
     protected int ValidateZero(int value, [CallerMemberName] string name = "") =>
-        value > 0 ? value : throw PropertyNullException.Throw(_className, name);
+        value > 0 ? value : throw new ArgumentNullException(name);
     
     protected int ValidateNegative(int value, [CallerMemberName] string name = "") =>
-        value > -1 ? value : throw PropertyNullException.Throw(_className, name);
+        value > -1 ? value : throw new ArgumentNullException(name);
 
     protected string ValidateNullOrEmpty(string property, [CallerMemberName] string name = "") =>
-        string.IsNullOrEmpty(property) ? throw PropertyNullException.Throw(_className, name) : property;
+        string.IsNullOrEmpty(property) ? throw new ArgumentNullException(name) : property;
 }
