@@ -14,11 +14,15 @@ public class LoggerPipeline<TRequest, TResponse> : IPipelineBehavior<TRequest, T
         _logger = logger;
     }
 
-    public Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken,
+    public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken,
         RequestHandlerDelegate<TResponse> next)
     {
         _logger.RequestStartedLog(typeof(TRequest).Name, request);
 
-        return next();
+        var response = await next();
+        
+        _logger.RequestFinishedLog(typeof(TRequest).Name, response);
+
+        return response;
     }
 }

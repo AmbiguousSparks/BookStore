@@ -14,7 +14,7 @@ using MediatR;
 using NSubstitute;
 using Xunit;
 
-namespace BookStore.Application.Tests.Requests;
+namespace BookStore.Application.Tests.Requests.Commands;
 
 public class CreateUserCommandHandlerTest
 {
