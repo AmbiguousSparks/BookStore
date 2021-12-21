@@ -17,7 +17,7 @@ public static class DataExtensions
     public static IServiceCollection AddData(this IServiceCollection services, IConfiguration configuration) =>
         services
             .AddDbContext(configuration)
-            .AddRepositories();
+            .AddAllRepositories();
 
     public static IHealthChecksBuilder AddDataHealthCheck(this IHealthChecksBuilder checks) =>
         checks.AddDbContextCheck<BookStoreDbContext>();

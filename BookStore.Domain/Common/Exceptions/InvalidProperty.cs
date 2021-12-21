@@ -2,7 +2,7 @@ using System.Text;
 
 namespace BookStore.Domain.Common.Exceptions;
 
-public class InvalidProperty : Exception, IValidationError
+public class InvalidProperty : IValidationError
 {
     public InvalidProperty(string className, string message)
     {

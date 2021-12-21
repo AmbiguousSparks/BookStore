@@ -4,15 +4,19 @@ namespace BookStore.Application.Extensions;
 
 public static class LoggerExtensions
 {
-    private static readonly EventId Event = new(100, "Started Handle");
-
     public static void RequestStartedLog<TRequest>(this ILogger logger, string param1, TRequest param2)
-        => BuildLogMessageTwoParams("Start handling {param1}, {param2}")(logger, param1, param2!, default!);
+        => BuildLogMessageTwoParams("Start handling {param1}, {param2}", new EventId(100, "Started"))(logger, param1,
+            param2!, default!);
+
+    public static void RequestFinishedLog<TRequest>(this ILogger logger, string param1, TRequest param2)
+        => BuildLogMessageTwoParams("Finished handling {param1}, {param2}", new EventId(101, "Finished"))(logger,
+            param1,
+            param2!, default!);
 
 
-    private static Action<ILogger, string, object, Exception> BuildLogMessageTwoParams(string message)
+    private static Action<ILogger, string, object, Exception> BuildLogMessageTwoParams(string message, EventId @event)
     {
         return LoggerMessage
-            .Define<string, object>(LogLevel.Information, Event, message);
+            .Define<string, object>(LogLevel.Information, @event, message);
     }
 }

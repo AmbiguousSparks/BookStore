@@ -18,9 +18,11 @@ public class Startup
     
     public void ConfigureServices(IServiceCollection services)
     {
+        services.AddData(Configuration);
         services.AddApplication();
         services.AddControllers();
-        services.AddData(Configuration);
+        services.AddEndpointsApiExplorer();
+        services.AddSwaggerGen();
         services.AddHealthChecks()
             .AddDataHealthCheck();
         services.AddLogging(l => l.AddConsole());
@@ -37,6 +39,9 @@ public class Startup
         app.UseHttpsRedirection();
         app.UseStaticFiles();
         app.UseRouting();
+        
+        app.UseSwagger();
+        app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "BookStore"));
         
         app.UseEndpoints(endpoints =>
         {
