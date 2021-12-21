@@ -6,7 +6,6 @@ using BookStore.Domain.Common.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 
 [assembly: InternalsVisibleTo("BookStore.Data.Tests")]
 
@@ -20,8 +19,8 @@ public static class DataExtensions
             .AddAllRepositories();
 
     public static IHealthChecksBuilder AddDataHealthCheck(this IHealthChecksBuilder checks) =>
-        checks.AddDbContextCheck<BookStoreDbContext>();
-    
+        checks.AddDbContextCheck<BookStoreDbContext>("BookStoreDbContext");
+
     internal static IServiceCollection AddDbContext(this IServiceCollection services, IConfiguration configuration)
     {
         services
