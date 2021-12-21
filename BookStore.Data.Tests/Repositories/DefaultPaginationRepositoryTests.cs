@@ -43,7 +43,7 @@ public class DefaultPaginationRepositoryTests
         var repository = new DefaultPaginationRepository<Author>(_context);
 
         //Act
-        var pagedAuthors = await repository.GetPaged(1, 2, a => a.Name);
+        var pagedAuthors = await repository.GetPaged(1, 2, "Name");
 
         //Assert
         var enumerable = pagedAuthors.PaginatedList as Author[] ?? pagedAuthors.PaginatedList.ToArray();
@@ -72,7 +72,7 @@ public class DefaultPaginationRepositoryTests
 
         //Act
         var pagedAuthors = await repository.GetPaged(1, 1, a => a.Name != "Daniel",
-            author => author.Name);
+            "Name");
 
         //Assert
         var enumerable = pagedAuthors.PaginatedList as Author[] ?? pagedAuthors.PaginatedList.ToArray();

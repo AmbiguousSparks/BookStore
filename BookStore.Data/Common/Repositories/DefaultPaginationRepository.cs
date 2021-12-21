@@ -1,6 +1,7 @@
 using System.Linq.Expressions;
 using BookStore.Application.Common.Interfaces;
 using BookStore.Data.Common.Repositories.Abstracts;
+using BookStore.Data.Extensions;
 using BookStore.Domain.Common.Models;
 using BookStore.Domain.Common.Models.Interfaces;
 using BookStore.Domain.Common.Repositories.Interfaces;
@@ -15,8 +16,8 @@ internal class DefaultPaginationRepository<TEntity> : Repository<TEntity>, IPagi
     {
     }
 
-    public async Task<PaginationInfo<TEntity>> GetPaged<TKey>(int page, int pageSize,
-        Expression<Func<TEntity, TKey>> orderBy, CancellationToken cancellationToken = default)
+    public async Task<PaginationInfo<TEntity>> GetPaged(int page, int pageSize, string sortColumn,
+        CancellationToken cancellationToken = default)
     {
         var count = await All()
             .CountAsync(cancellationToken);
@@ -24,14 +25,14 @@ internal class DefaultPaginationRepository<TEntity> : Repository<TEntity>, IPagi
         var list = await All()
             .Skip((page - 1) * pageSize)
             .Take(pageSize)
-            .OrderBy(orderBy)
+            .OrderBy(sortColumn)
             .ToListAsync(cancellationToken);
 
         return new PaginationInfo<TEntity>(count, list);
     }
 
-    public async Task<PaginationInfo<TEntity>> GetPaged<TKey>(int page, int pageSize,
-        Expression<Func<TEntity, bool>> condition, Expression<Func<TEntity, TKey>> orderBy, CancellationToken
+    public async Task<PaginationInfo<TEntity>> GetPaged(int page, int pageSize,
+        Expression<Func<TEntity, bool>> condition, string sortColumn, CancellationToken
             cancellationToken = default)
 
     {
@@ -43,7 +44,7 @@ internal class DefaultPaginationRepository<TEntity> : Repository<TEntity>, IPagi
             .Where(condition)
             .Skip((page - 1) * pageSize)
             .Take(pageSize)
-            .OrderBy(orderBy)
+            .OrderBy(sortColumn)
             .ToListAsync(cancellationToken);
 
         return new PaginationInfo<TEntity>(count, list);
