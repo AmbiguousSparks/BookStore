@@ -1,3 +1,4 @@
+using BookStore.API.Middlewares;
 using BookStore.Application.Common.Interfaces;
 using BookStore.Application.Extensions;
 using BookStore.Data.Extensions;
@@ -21,11 +22,16 @@ public class Startup
         services.AddData(Configuration);
         services.AddApplication();
         services.AddControllers();
+        services.AddSingleton<TaskCanceledExceptionMiddleware>();
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
         services.AddHealthChecks()
             .AddDataHealthCheck();
-        services.AddLogging(l => l.AddConsole());
+        services.AddLogging(l =>
+        {
+            l.AddConsole();
+            l.AddFilter(f => f == LogLevel.Error || f == LogLevel.Warning);
+        });
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -36,6 +42,7 @@ public class Startup
         else
             app.UseHsts();
 
+        app.UseMiddleware<TaskCanceledExceptionMiddleware>();
         app.UseHttpsRedirection();
         app.UseStaticFiles();
         app.UseRouting();
