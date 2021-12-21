@@ -11,10 +11,10 @@ using OneOf;
 
 namespace BookStore.Application.Users.Commands.CreateUser;
 
-public class CreateUserCommand : UserDto, IRequest<OneOf<Unit, InvalidProperty, EntityAlreadyExists>>
+public class CreateUserCommand : UserInDto, IRequest<OneOf<Unit, InvalidProperty, EntityAlreadyExists>>
 {
     public string ConfirmPassword { get; set; } = default!;
-    public UserType Type { get; set; }
+    private UserType Type { get; set; }
     
     internal class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, OneOf<Unit, InvalidProperty, EntityAlreadyExists>>
     {

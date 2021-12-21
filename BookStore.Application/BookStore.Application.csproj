@@ -21,8 +21,4 @@
       <ProjectReference Include="..\BookStore.Domain\BookStore.Domain.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Users\Validators" />
-    </ItemGroup>
-
 </Project>

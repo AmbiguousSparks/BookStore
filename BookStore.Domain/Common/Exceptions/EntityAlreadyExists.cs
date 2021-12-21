@@ -2,7 +2,7 @@ using System.Text;
 
 namespace BookStore.Domain.Common.Exceptions;
 
-public class EntityAlreadyExists : Exception, IValidationError
+public class EntityAlreadyExists : IValidationError
 {
     public EntityAlreadyExists(string className)
     {

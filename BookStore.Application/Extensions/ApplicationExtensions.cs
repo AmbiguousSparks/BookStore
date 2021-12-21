@@ -15,7 +15,7 @@ public static class ApplicationExtensions
         services
             .AddAutoMapper()
             .AddPipeLineBehaviors()
-            .AddMediatR(Assembly.GetExecutingAssembly())
+            .AddMediatR(config => config.AsScoped(), Assembly.GetExecutingAssembly())
             .AddFluentValidation();
 
 
@@ -35,7 +35,7 @@ public static class ApplicationExtensions
     }
 
     private static IServiceCollection AddAutoMapper(this IServiceCollection services) =>
-        services.AddAutoMapper(Assembly.GetExecutingAssembly());
+        services.AddAutoMapper(c => c.AddProfile<BookStoreMapperProfile>());
 
     private static IServiceCollection AddFluentValidation(this IServiceCollection services) =>
         services.AddFluentValidation(c =>
