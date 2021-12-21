@@ -2,7 +2,7 @@ using BookStore.Domain.Common.Models;
 
 namespace BookStore.Domain.Models.Books;
 
-public class Author : Entity<Author, int>
+public class Author : Entity<int>
 {
     #region Fields
 

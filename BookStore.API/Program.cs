@@ -1,5 +1,4 @@
 using BookStore.API;
-var b = WebApplication.CreateBuilder();
 
 var builder = CreateWebHost(args)
     .ConfigureAppConfiguration(c =>

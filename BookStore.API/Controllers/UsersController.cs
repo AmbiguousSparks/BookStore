@@ -23,7 +23,7 @@ public class UsersController : ControllerBase
     {
         var response = await _mediator.Send(createUserCommand, cancellationToken);
         return response.Match<IActionResult>(
-            unit => CreatedAtAction(nameof(Create), unit),
+            _ => CreatedAtAction(nameof(Create), createUserCommand),
             BadRequest,
             BadRequest);
     }

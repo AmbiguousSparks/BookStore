@@ -1,4 +1,3 @@
-using BookStore.Domain.Common.Models.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 
