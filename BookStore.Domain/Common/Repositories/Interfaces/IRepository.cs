@@ -1,6 +1,5 @@
 using System.Linq.Expressions;
 using BookStore.Domain.Common.Models.Interfaces;
-using BookStore.Domain.Models.Users;
 
 namespace BookStore.Domain.Common.Repositories.Interfaces;
 

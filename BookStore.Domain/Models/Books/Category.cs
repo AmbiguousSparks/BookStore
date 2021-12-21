@@ -2,7 +2,7 @@ using BookStore.Domain.Common.Models;
 
 namespace BookStore.Domain.Models.Books;
 
-public class Category : Entity<Category, int>
+public class Category : Entity<int>
 {
     
     #region Fields

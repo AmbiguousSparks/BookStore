@@ -3,7 +3,7 @@ using BookStore.Domain.Models.Enums;
 
 namespace BookStore.Domain.Models.Users;
 
-public class User : Entity<User, int>
+public class User : Entity<int>
 {
     #region Fields
 

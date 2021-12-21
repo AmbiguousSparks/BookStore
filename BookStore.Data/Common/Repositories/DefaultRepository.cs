@@ -25,12 +25,12 @@ internal class DefaultRepository<TEntity> : Repository<TEntity>, IRepository<TEn
 
     public ValueTask<TEntity> Get(int id, CancellationToken cancellationToken = default)
     {
-        return All().FindAsync(new object?[] { id }, cancellationToken: cancellationToken)!;
+        return All().FindAsync(new object?[] { id }, cancellationToken)!;
     }
 
     public Task<TEntity> Get(Expression<Func<TEntity, bool>> condition, CancellationToken cancellationToken = default)
     {
-        return All().FirstAsync(condition, cancellationToken: cancellationToken);
+        return All().FirstAsync(condition, cancellationToken);
     }
 
     public Task<bool> Exists(Expression<Func<TEntity, bool>> condition, CancellationToken cancellationToken = default)
