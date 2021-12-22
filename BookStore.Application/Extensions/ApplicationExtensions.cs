@@ -1,8 +1,13 @@
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using BookStore.Application.Cache.Services;
 using BookStore.Application.Profiles;
+using BookStore.Domain.Common.Services;
 using FluentValidation.AspNetCore;
 using MediatR;
+using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Caching.StackExchangeRedis;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 [assembly: InternalsVisibleTo("BookStore.Application.Tests")]
@@ -11,8 +16,13 @@ namespace BookStore.Application.Extensions;
 
 public static class ApplicationExtensions
 {
-    public static IServiceCollection AddApplication(this IServiceCollection services) =>
+    public static IServiceCollection AddApplication(this IServiceCollection services, IConfiguration configuration) =>
         services
+            .AddScoped<ICacheService, CacheService>()
+            .AddSingleton<IDistributedCache>(x => new RedisCache(new RedisCacheOptions
+            {
+                Configuration = configuration.GetValue<string>("RedisConnection")
+            }))
             .AddAutoMapper()
             .AddPipeLineBehaviors()
             .AddMediatR(config => config.AsScoped(), Assembly.GetExecutingAssembly())

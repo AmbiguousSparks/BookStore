@@ -20,7 +20,7 @@ public class Startup
     public void ConfigureServices(IServiceCollection services)
     {
         services.AddData(Configuration);
-        services.AddApplication();
+        services.AddApplication(Configuration);
         services.AddControllers();
         services.AddSingleton<TaskCanceledExceptionMiddleware>();
         services.AddEndpointsApiExplorer();
