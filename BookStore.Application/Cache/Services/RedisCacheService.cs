@@ -1,15 +1,15 @@
 using System.Text;
-using System.Text.Json;
 using BookStore.Domain.Common.Services;
 using Microsoft.Extensions.Caching.Distributed;
+using Newtonsoft.Json;
 
 namespace BookStore.Application.Cache.Services;
 
-public class CacheService : ICacheService
+internal class RedisCacheService : ICacheService
 {
     private readonly IDistributedCache _distributedCache;
 
-    public CacheService(IDistributedCache distributedCache)
+    public RedisCacheService(IDistributedCache distributedCache)
     {
         _distributedCache = distributedCache;
     }
@@ -17,12 +17,13 @@ public class CacheService : ICacheService
     public async Task SetAsync<T>(string cacheKey, T cacheValue, TimeSpan timeToLive,
         CancellationToken cancellationToken = default)
     {
-        var serializedValue = JsonSerializer.SerializeToUtf8Bytes(cacheValue);
+        var serializedValue = JsonConvert.SerializeObject(cacheValue);
 
-        await _distributedCache.SetAsync(cacheKey, serializedValue, new DistributedCacheEntryOptions
-        {
-            AbsoluteExpirationRelativeToNow = timeToLive
-        }, cancellationToken);
+        await _distributedCache.SetAsync(cacheKey, Encoding.UTF8.GetBytes(serializedValue),
+            new DistributedCacheEntryOptions
+            {
+                AbsoluteExpirationRelativeToNow = timeToLive
+            }, cancellationToken);
     }
 
     public async Task<T> GetAsync<T>(string cacheKey, CancellationToken cancellationToken = default)
@@ -34,6 +35,6 @@ public class CacheService : ICacheService
 
         var serializedJson = Encoding.UTF8.GetString(serializedValue);
 
-        return JsonSerializer.Deserialize<T>(serializedJson)!;
+        return JsonConvert.DeserializeObject<T>(serializedJson);
     }
 }

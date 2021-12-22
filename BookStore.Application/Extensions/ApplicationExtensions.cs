@@ -18,7 +18,7 @@ public static class ApplicationExtensions
 {
     public static IServiceCollection AddApplication(this IServiceCollection services, IConfiguration configuration) =>
         services
-            .AddScoped<ICacheService, CacheService>()
+            .AddScoped<ICacheService, RedisCacheService>()
             .AddSingleton<IDistributedCache>(x => new RedisCache(new RedisCacheOptions
             {
                 Configuration = configuration.GetValue<string>("RedisConnection")
