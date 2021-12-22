@@ -26,7 +26,9 @@ public class Startup
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
         services.AddHealthChecks()
-            .AddDataHealthCheck();
+            .AddDataHealthCheck()
+            .AddApplicationChecks();
+        
         services.AddLogging(l =>
         {
             l.AddConsole();

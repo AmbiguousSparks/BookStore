@@ -1,7 +1,9 @@
 using System;
 using BookStore.Application.Extensions;
+using BookStore.Domain.Common.Services;
 using FluentAssertions;
 using MediatR;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NSubstitute;
@@ -14,6 +16,8 @@ public class ApplicationExtensionsTests
     [Theory]
     [InlineData(typeof(IPipelineBehavior<IRequest, Unit>))]
     [InlineData(typeof(IMediator))]
+    [InlineData(typeof(ICacheService))]
+    [InlineData(typeof(IDistributedCache))]
     public void AddApplication_ShouldRegisterServices(Type serviceType)
     {
         //Arrange
