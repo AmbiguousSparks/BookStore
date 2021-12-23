@@ -1,3 +1,4 @@
+using BookStore.API.ApplicationStart;
 using BookStore.API.Middlewares;
 using BookStore.Application.Common.Interfaces;
 using BookStore.Application.Extensions;
@@ -11,30 +12,29 @@ namespace BookStore.API;
 public class Startup
 {
     private IConfiguration Configuration { get; }
-    
+
     public Startup(IConfiguration configuration)
     {
         Configuration = configuration;
     }
-    
-    public void ConfigureServices(IServiceCollection services)
-    {
-        services.AddData(Configuration);
-        services.AddApplication(Configuration);
-        services.AddControllers();
-        services.AddSingleton<TaskCanceledExceptionMiddleware>();
-        services.AddEndpointsApiExplorer();
-        services.AddSwaggerGen();
-        services.AddHealthChecks()
-            .AddDataHealthCheck()
-            .AddApplicationChecks();
-        
-        services.AddLogging(l =>
-        {
-            l.AddConsole();
-            l.AddFilter(f => f == LogLevel.Error || f == LogLevel.Warning);
-        });
-    }
+
+    public void ConfigureServices(IServiceCollection services) =>
+        services
+            .AddData(Configuration)
+            .AddApplication(Configuration)
+            .AddApiServices(Configuration)
+            .AddAuthenticationServices(Configuration)
+            .AddSingleton<TaskCanceledExceptionMiddleware>()
+            .AddEndpointsApiExplorer()
+            .AddSwaggerGen()
+            .AddLogging(l =>
+            {
+                l.AddConsole();
+                l.AddFilter(f => f == LogLevel.Error || f == LogLevel.Warning);
+            })
+            .AddHealthChecks()
+                .AddDataHealthCheck()
+                .AddApplicationChecks();
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
@@ -44,14 +44,16 @@ public class Startup
         else
             app.UseHsts();
 
+        app.UseSwagger();
+        app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "BookStore"));
+        app.UseCors("Default");
         app.UseMiddleware<TaskCanceledExceptionMiddleware>();
         app.UseHttpsRedirection();
         app.UseStaticFiles();
-        app.UseRouting();
-        
-        app.UseSwagger();
-        app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "BookStore"));
-        
+        app.UseAuthentication();
+        app.UseRouting(); 
+        app.UseAuthorization();
+
         app.UseEndpoints(endpoints =>
         {
             endpoints.MapControllers();
@@ -64,7 +66,7 @@ public class Startup
             });
         });
     }
-    
+
     private static void MigrateDbToLatestVersion(IApplicationBuilder app)
     {
         using var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope();

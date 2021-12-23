@@ -1,3 +1,4 @@
+using BookStore.API.Common.Auth;
 using BookStore.Application.Users.Commands.CreateUser;
 using BookStore.Application.Users.Common.Models;
 using BookStore.Application.Users.Query;
@@ -8,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BookStore.API.Controllers;
 
-[ApiController, Route("api/[controller]")]
+[ApiController, Route("api/[controller]"), Authorize(Roles = AuthConstants.AdministratorRole)]
 public class UsersController : ControllerBase
 {
     private readonly IMediator _mediator;
@@ -18,7 +19,7 @@ public class UsersController : ControllerBase
         _mediator = mediator;
     }
 
-    [HttpPost, AllowAnonymous]
+    [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreateUserCommand createUserCommand,
         CancellationToken cancellationToken)
     {
@@ -29,13 +30,13 @@ public class UsersController : ControllerBase
             BadRequest);
     }
 
-    [HttpGet, AllowAnonymous]
-    public async Task<IEnumerable<UserOutDto>> GetAll(CancellationToken cancellationToken)
+    [HttpGet]
+    public async Task<IEnumerable<UserOutDto>> GetAll([FromQuery] GetAllUsersQuery query, CancellationToken cancellationToken)
     {
-        return await _mediator.Send(new GetAllUsersQuery(), cancellationToken);
+        return await _mediator.Send(query, cancellationToken);
     }
     
-    [HttpGet("paged"), AllowAnonymous]
+    [HttpGet("paged")]
     public async Task<PaginationInfo<UserOutDto>> GetPaged([FromQuery] GetPagedUsersQuery query, CancellationToken cancellationToken)
     {
         return await _mediator.Send(query, cancellationToken);

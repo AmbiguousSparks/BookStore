@@ -1,15 +1,6 @@
 using BookStore.API;
 
-var builder = CreateWebHost(args)
-    .ConfigureAppConfiguration(c =>
-    {
-        c.AddJsonFile("appsettings.json", false, true);
-        c.AddJsonFile(
-            $"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Development"}.json",
-            true);
-        c.AddEnvironmentVariables();
-    });
-
+var builder = CreateWebHost(args);
 var app = builder.Build();
 
 app.Run();
