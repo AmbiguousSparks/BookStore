@@ -3,7 +3,7 @@ import {sleep} from 'k6';
 
 export let options = {
     insecureSkipTLSVerify: true,
-    noConnectionsReuse: false,
+    noConnectionReuse: false,
     stages: [
         {duration: '5m', target: 200},
         {duration: '3m', target: 1500},
