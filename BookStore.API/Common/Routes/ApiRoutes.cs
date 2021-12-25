@@ -6,6 +6,7 @@ public static class ApiRoutes
     {
         public const string GetAll = "api/Users";
         public const string Create = "api/Users";
+        public const string Authenticate = "api/Users/Login";
         public const string GetPaged = "api/Users/Paged";
     }
 }

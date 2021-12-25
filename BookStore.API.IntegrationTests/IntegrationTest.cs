@@ -5,7 +5,7 @@ using System.Net.Http.Json;
 using System.Threading.Tasks;
 using BookStore.API.Common.Routes;
 using BookStore.Application.Common.Interfaces;
-using BookStore.Application.Users.Commands.CreateUser;
+using BookStore.Application.Users.Commands.Create;
 using BookStore.Data.Context;
 using BookStore.Domain.Common.Models;
 using BookStore.Domain.Common.Services;
@@ -57,7 +57,7 @@ public class IntegrationTest : IDisposable
     private async Task<string> GetJwtAsync()
     {
         var response = await TestClient.PostAsJsonAsync(ApiRoutes.Users.Create,
-            new CreateUserCommand
+            new CreateCommand
             {
                 Email = "test@integration.com",
                 Password = "S0M3P@SSword",

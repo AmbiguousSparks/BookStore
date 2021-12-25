@@ -11,14 +11,14 @@ using BookStore.Domain.Models.Users;
 using MediatR;
 using OneOf;
 
-namespace BookStore.Application.Users.Commands.CreateUser;
+namespace BookStore.Application.Users.Commands.Create;
 
-public class CreateUserCommand : UserInDto, IRequest<OneOf<UserToken, InvalidProperty, EntityAlreadyExists>>
+public class CreateCommand : UserInDto, IRequest<OneOf<UserToken, InvalidProperty, EntityAlreadyExists>>
 {
     public string ConfirmPassword { get; set; } = default!;
     private UserType Type { get; set; }
 
-    internal class CreateUserCommandHandler : IRequestHandler<CreateUserCommand,
+    internal class CreateUserCommandHandler : IRequestHandler<CreateCommand,
         OneOf<UserToken, InvalidProperty, EntityAlreadyExists>>
     {
         private readonly IMapper _mapper;
@@ -32,7 +32,7 @@ public class CreateUserCommand : UserInDto, IRequest<OneOf<UserToken, InvalidPro
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
 
-        public async Task<OneOf<UserToken, InvalidProperty, EntityAlreadyExists>> Handle(CreateUserCommand request,
+        public async Task<OneOf<UserToken, InvalidProperty, EntityAlreadyExists>> Handle(CreateCommand request,
             CancellationToken cancellationToken)
         {
             try
