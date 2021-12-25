@@ -11,7 +11,6 @@ public class GetPagedUsersQuery : IRequest<PaginationInfo<UserOutDto>>
 {
     public int Page { get; set; }
     public int PageSize { get; set; }
-
     public string SortColumn { get; set; } = default!;
     
     internal class GetPagedUsersQueryHandler : IRequestHandler<GetPagedUsersQuery, PaginationInfo<UserOutDto>>

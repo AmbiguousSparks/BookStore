@@ -1,4 +1,3 @@
-using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
@@ -45,18 +44,18 @@ public class IntegrationTest
         TestClient = factory.CreateClient();
     }
 
-    protected async Task AuthenticateAsync()
+    protected async Task AuthenticateAsync(string email)
     {
         TestClient.DefaultRequestHeaders.Authorization =
-            new AuthenticationHeaderValue("Bearer", await GetJwtAsync());
+            new AuthenticationHeaderValue("Bearer", await GetJwtAsync(email));
     }
 
-    private async Task<string> GetJwtAsync()
+    private async Task<string> GetJwtAsync(string email)
     {
         var response = await TestClient.PostAsJsonAsync(ApiRoutes.Users.Create,
             new CreateUserCommand
             {
-                Email = "test@integration.com",
+                Email = email,
                 Password = "S0M3P@SSword",
                 ConfirmPassword = "S0M3P@SSword",
                 FirstName = "Test",
