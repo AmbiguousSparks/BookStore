@@ -8,7 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace BookStore.Application.Authentication.Services;
 
-internal class AuthService : IAuthService
+internal sealed class AuthService : IAuthService
 {
     private readonly TokenConfiguration _tokenConfiguration;
     private readonly TokenValidationParameters _tokenValidationParameters;    
@@ -32,6 +32,7 @@ internal class AuthService : IAuthService
                 new(ClaimTypes.Email, user.Email)
             }),
             Expires = DateTime.Now.AddHours(_tokenConfiguration.ValidTime),
+            NotBefore = DateTime.Now,
             SigningCredentials =
                 new(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
         };

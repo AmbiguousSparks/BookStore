@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 using AutoMapper;
 using BookStore.Application.Extensions;
 using BookStore.Application.Users.Commands.CreateUser;
+using BookStore.Application.Users.Queries.Authentication;
 using BookStore.Domain.Common.Exceptions;
+using BookStore.Domain.Common.Models;
 using BookStore.Domain.Common.Repositories.Interfaces;
 using BookStore.Domain.Models.Enums;
 using BookStore.Domain.Models.Users;
@@ -30,6 +32,8 @@ public class CreateUserCommandHandlerTest
         var user = new User("Daniel",
             "Santos", "daniel@gmail.com", "Teste@password123", UserType.Default);
         _mapper.Map<User>(Arg.Any<CreateUserCommand>()).Returns(user);
+        _mediator.Send(Arg.Any<GetUserTokenQuery>(), Arg.Any<CancellationToken>())
+            .ReturnsForAnyArgs(new UserToken());
 
         var handler = new CreateUserCommand.CreateUserCommandHandler(_mapper, _repository, _mediator);
 
@@ -41,7 +45,7 @@ public class CreateUserCommandHandlerTest
         await _repository.ReceivedWithAnyArgs(1).Exists(Arg.Any<Expression<Func<User, bool>>>());
         await _repository.ReceivedWithAnyArgs(1).Create(Arg.Any<User>());
         await _mediator.ReceivedWithAnyArgs(1).DispatchDomainEvents(user);
-        response.Value.Should().BeAssignableTo<Unit>();
+        response.Value.Should().BeAssignableTo<UserToken>();
     }
 
     [Fact]

@@ -1,7 +1,7 @@
 using BookStore.API.Common.Auth;
 using BookStore.Application.Users.Commands.CreateUser;
 using BookStore.Application.Users.Common.Models;
-using BookStore.Application.Users.Query;
+using BookStore.Application.Users.Queries.GetUsers;
 using BookStore.Domain.Common.Models;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -19,13 +19,13 @@ public class UsersController : ControllerBase
         _mediator = mediator;
     }
 
-    [HttpPost]
+    [HttpPost, AllowAnonymous]
     public async Task<IActionResult> Create([FromBody] CreateUserCommand createUserCommand,
         CancellationToken cancellationToken)
     {
         var response = await _mediator.Send(createUserCommand, cancellationToken);
         return response.Match<IActionResult>(
-            _ => CreatedAtAction(nameof(GetAll), createUserCommand),
+            _ => CreatedAtAction(nameof(GetAll), response.Value),
             BadRequest,
             BadRequest);
     }

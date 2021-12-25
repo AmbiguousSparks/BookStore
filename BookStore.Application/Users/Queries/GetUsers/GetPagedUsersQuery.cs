@@ -5,7 +5,7 @@ using BookStore.Domain.Common.Repositories.Interfaces;
 using BookStore.Domain.Models.Users;
 using MediatR;
 
-namespace BookStore.Application.Users.Query;
+namespace BookStore.Application.Users.Queries.GetUsers;
 
 public class GetPagedUsersQuery : IRequest<PaginationInfo<UserOutDto>>
 {
