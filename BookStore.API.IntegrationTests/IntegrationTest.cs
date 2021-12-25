@@ -1,3 +1,4 @@
+using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
@@ -16,16 +17,18 @@ using NSubstitute;
 
 namespace BookStore.API.IntegrationTests;
 
-public class IntegrationTest
+public class IntegrationTest : IDisposable
 {
     protected HttpClient TestClient { get; }
     protected ICacheService CacheService { get; }
+
+    private WebApplicationFactory<Startup> Factory { get; }
 
     protected IntegrationTest()
     {
         CacheService = Substitute.For<ICacheService>();
 
-        var factory = new WebApplicationFactory<Startup>()
+        Factory = new WebApplicationFactory<Startup>()
             .WithWebHostBuilder(builder =>
             {
                 builder.ConfigureServices(services =>
@@ -38,24 +41,25 @@ public class IntegrationTest
                     services.AddDbContext<BookStoreDbContext>(c =>
                         c.UseInMemoryDatabase("TestIntegration"));
                     services
-                        .AddScoped<IBookStoreDbContext>(provider => provider.GetRequiredService<BookStoreDbContext>());
+                        .AddScoped<IBookStoreDbContext>(provider =>
+                            provider.GetRequiredService<BookStoreDbContext>());
                 });
             });
-        TestClient = factory.CreateClient();
+        TestClient = Factory.CreateDefaultClient();
     }
 
-    protected async Task AuthenticateAsync(string email)
+    protected async Task AuthenticateAsync()
     {
         TestClient.DefaultRequestHeaders.Authorization =
-            new AuthenticationHeaderValue("Bearer", await GetJwtAsync(email));
+            new AuthenticationHeaderValue("Bearer", await GetJwtAsync());
     }
 
-    private async Task<string> GetJwtAsync(string email)
+    private async Task<string> GetJwtAsync()
     {
         var response = await TestClient.PostAsJsonAsync(ApiRoutes.Users.Create,
             new CreateUserCommand
             {
-                Email = email,
+                Email = "test@integration.com",
                 Password = "S0M3P@SSword",
                 ConfirmPassword = "S0M3P@SSword",
                 FirstName = "Test",
@@ -66,5 +70,18 @@ public class IntegrationTest
 
         var token = await response.Content.ReadFromJsonAsync<UserToken>();
         return token!.AuthToken;
+    }
+    public void Dispose()
+    {
+        TestClient.Dispose();
+        DeleteDb();
+        Factory.Dispose();
+        GC.SuppressFinalize(this);
+    }
+
+    private void DeleteDb()
+    {
+        var scope = Factory.Server.Services.GetRequiredService<IServiceScopeFactory>().CreateScope();
+        scope.ServiceProvider.GetRequiredService<BookStoreDbContext>().Database.EnsureDeleted();
     }
 }
