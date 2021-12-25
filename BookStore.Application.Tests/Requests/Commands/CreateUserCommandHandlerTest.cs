@@ -4,7 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using BookStore.Application.Extensions;
-using BookStore.Application.Users.Commands.CreateUser;
+using BookStore.Application.Users.Commands.Create;
 using BookStore.Application.Users.Queries.Authentication;
 using BookStore.Domain.Common.Exceptions;
 using BookStore.Domain.Common.Models;
@@ -31,17 +31,17 @@ public class CreateUserCommandHandlerTest
         _repository.Exists(Arg.Any<Expression<Func<User, bool>>>()).Returns(false);
         var user = new User("Daniel",
             "Santos", "daniel@gmail.com", "Teste@password123", UserType.Default);
-        _mapper.Map<User>(Arg.Any<CreateUserCommand>()).Returns(user);
+        _mapper.Map<User>(Arg.Any<CreateCommand>()).Returns(user);
         _mediator.Send(Arg.Any<GetUserTokenQuery>(), Arg.Any<CancellationToken>())
             .ReturnsForAnyArgs(new UserToken());
 
-        var handler = new CreateUserCommand.CreateUserCommandHandler(_mapper, _repository, _mediator);
+        var handler = new CreateCommand.CreateUserCommandHandler(_mapper, _repository, _mediator);
 
         //Act
-        var response = await handler.Handle(new CreateUserCommand(), CancellationToken.None);
+        var response = await handler.Handle(new CreateCommand(), CancellationToken.None);
 
         //Assert
-        _mapper.ReceivedWithAnyArgs(1).Map<User>(Arg.Any<CreateUserCommand>());
+        _mapper.ReceivedWithAnyArgs(1).Map<User>(Arg.Any<CreateCommand>());
         await _repository.ReceivedWithAnyArgs(1).Exists(Arg.Any<Expression<Func<User, bool>>>());
         await _repository.ReceivedWithAnyArgs(1).Create(Arg.Any<User>());
         await _mediator.ReceivedWithAnyArgs(1).DispatchDomainEvents(user);
@@ -55,17 +55,17 @@ public class CreateUserCommandHandlerTest
         _repository.Exists(Arg.Any<Expression<Func<User, bool>>>()).Returns(true);
         var user = new User("Daniel",
             "Santos", "daniel@gmail.com", "Teste@password123", UserType.Default);
-        _mapper.Map<User>(Arg.Any<CreateUserCommand>()).Returns(user);
+        _mapper.Map<User>(Arg.Any<CreateCommand>()).Returns(user);
 
         var handler =
-            new CreateUserCommand.CreateUserCommandHandler(_mapper, _repository, _mediator);
+            new CreateCommand.CreateUserCommandHandler(_mapper, _repository, _mediator);
 
         //Act
-        var response = await handler.Handle(new CreateUserCommand(), CancellationToken.None);
+        var response = await handler.Handle(new CreateCommand(), CancellationToken.None);
 
 
         //Assert
-        _mapper.DidNotReceiveWithAnyArgs().Map<User>(Arg.Any<CreateUserCommand>());
+        _mapper.DidNotReceiveWithAnyArgs().Map<User>(Arg.Any<CreateCommand>());
         await _repository.ReceivedWithAnyArgs(1).Exists(Arg.Any<Expression<Func<User, bool>>>());
         await _repository.DidNotReceiveWithAnyArgs().Create(Arg.Any<User>());
         await _mediator.DidNotReceiveWithAnyArgs().DispatchDomainEvents(user);

@@ -5,7 +5,8 @@ using System.Net.Http.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using BookStore.API.Common.Routes;
-using BookStore.Application.Users.Commands.CreateUser;
+using BookStore.Application.Users.Commands.Authenticate;
+using BookStore.Application.Users.Commands.Create;
 using BookStore.Application.Users.Common.Models;
 using BookStore.Domain.Common.Models;
 using FluentAssertions;
@@ -75,11 +76,51 @@ public class UsersControllerTest : IntegrationTest
         //Assert
         await action.Should().ThrowAsync<HttpRequestException>();
     }
+    
+    [Fact]
+    public async Task? Login_ShouldReturnUserTokenWhenValidCredentials()
+    {
+        //Arrange
+        var tasks = new List<Task>(3);
+        tasks.Add(CreateTestUser("test@gmail.com"));
+
+        await Task.WhenAll(tasks);
+        
+        //Act
+        var response = await TestClient.PostAsJsonAsync(ApiRoutes.Users.Authenticate, new AuthenticateCommand
+        {
+            Email = "test@gmail.com",
+            Password = "S0M3P@SSword"
+        });
+        
+        //Assert
+        var authToken = await response.Content.ReadFromJsonAsync<UserToken>();
+        authToken.Should().NotBeNull();
+        authToken!.AuthToken.Should().NotBeEmpty();
+    }
+    
+    [Fact]
+    public async Task? Login_ShouldReturnInvalidCredentialsException()
+    {
+        //Arrange
+       
+        //Act
+        var response = await TestClient.PostAsJsonAsync(ApiRoutes.Users.Authenticate, new AuthenticateCommand
+        {
+            Email = "test@gmail.com",
+            Password = "S0M3P@SSword1213213"
+        });
+
+        //Assert
+        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+        var message = await response.Content.ReadAsStringAsync();
+        message.Should().Contain("Invalid Credentials");
+    }
 
     private async Task CreateTestUser(string email)
     {
         var res = await TestClient.PostAsJsonAsync(ApiRoutes.Users.Create,
-            new CreateUserCommand()
+            new CreateCommand()
             {
                 Email = email,
                 Password = "S0M3P@SSword",
