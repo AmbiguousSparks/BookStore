@@ -24,8 +24,7 @@ public class UsersControllerTest : IntegrationTest
         CacheService.GetAsync<IEnumerable<UserOutDto>>(Arg.Any<string>(),
                 Arg.Any<CancellationToken>())
             .ReturnsNullForAnyArgs();
-
-        await AuthenticateAsync("test1@integration.com");
+        await AuthenticateAsync();
 
         //Act
         var users = await TestClient.GetAsync(ApiRoutes.Users.GetAll);
@@ -46,7 +45,7 @@ public class UsersControllerTest : IntegrationTest
 
         await Task.WhenAll(tasks);
 
-        await AuthenticateAsync("test2@integration.com");
+        await AuthenticateAsync();
 
         //Act
         var users = await 
@@ -64,14 +63,14 @@ public class UsersControllerTest : IntegrationTest
     {
         //Arrange
         var tasks = new List<Task>(3);
-        tasks.Add(CreateTestUser("test4@gmail.com"));
+        tasks.Add(CreateTestUser("test@gmail.com"));
 
         await Task.WhenAll(tasks);
 
-        await AuthenticateAsync("test3@integration.com");
-
+        await AuthenticateAsync();
+        
         //Act
-        var action = async () => await CreateTestUser("test4@gmail.com");
+        var action = async () => await CreateTestUser("test@gmail.com");
         
         //Assert
         await action.Should().ThrowAsync<HttpRequestException>();
