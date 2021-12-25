@@ -5,13 +5,12 @@ using BookStore.Domain.Common.Repositories.Interfaces;
 using BookStore.Domain.Models.Users;
 using MediatR;
 
-namespace BookStore.Application.Users.Query;
+namespace BookStore.Application.Users.Queries.GetUsers;
 
 public class GetPagedUsersQuery : IRequest<PaginationInfo<UserOutDto>>
 {
     public int Page { get; set; }
     public int PageSize { get; set; }
-
     public string SortColumn { get; set; } = default!;
     
     internal class GetPagedUsersQueryHandler : IRequestHandler<GetPagedUsersQuery, PaginationInfo<UserOutDto>>

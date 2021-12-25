@@ -22,8 +22,8 @@ public class Startup
         services
             .AddData(Configuration)
             .AddApplication(Configuration)
+            .AddAuthentication(Configuration)
             .AddApiServices(Configuration)
-            .AddAuthenticationServices(Configuration)
             .AddSingleton<TaskCanceledExceptionMiddleware>()
             .AddEndpointsApiExplorer()
             .AddSwaggerGen()
@@ -72,6 +72,7 @@ public class Startup
         using var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope();
         using var context = scope.ServiceProvider.GetRequiredService<IBookStoreDbContext>();
 
-        context.Database.Migrate();
+        if(context.Database.IsRelational())
+            context.Database.Migrate();
     }
 }

@@ -14,6 +14,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookStore.Data.Tests", "Boo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookStore.API", "BookStore.API\BookStore.API.csproj", "{D0408E81-F166-4F2D-A2B4-6A48C96A4FEC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookStore.API.IntegrationTests", "BookStore.API.IntegrationTests\BookStore.API.IntegrationTests.csproj", "{FC0E2D8B-B074-4292-A026-054B99815E19}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,5 +50,9 @@ Global
 		{D0408E81-F166-4F2D-A2B4-6A48C96A4FEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D0408E81-F166-4F2D-A2B4-6A48C96A4FEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D0408E81-F166-4F2D-A2B4-6A48C96A4FEC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC0E2D8B-B074-4292-A026-054B99815E19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC0E2D8B-B074-4292-A026-054B99815E19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC0E2D8B-B074-4292-A026-054B99815E19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC0E2D8B-B074-4292-A026-054B99815E19}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

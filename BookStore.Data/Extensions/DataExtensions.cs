@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 [assembly: InternalsVisibleTo("BookStore.Data.Tests")]
+[assembly: InternalsVisibleTo("BookStore.API.IntegrationTests")]
 
 namespace BookStore.Data.Extensions;
 

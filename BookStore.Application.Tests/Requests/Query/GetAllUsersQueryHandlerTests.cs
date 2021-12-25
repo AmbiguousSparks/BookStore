@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using BookStore.Application.Users.Common.Models;
-using BookStore.Application.Users.Query;
+using BookStore.Application.Users.Queries.GetUsers;
 using BookStore.Domain.Common.Repositories.Interfaces;
 using BookStore.Domain.Models.Users;
 using NSubstitute;
