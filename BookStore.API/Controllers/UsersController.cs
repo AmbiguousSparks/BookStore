@@ -1,5 +1,6 @@
 using BookStore.API.Common.Auth;
-using BookStore.Application.Users.Commands.CreateUser;
+using BookStore.Application.Users.Commands.Authenticate;
+using BookStore.Application.Users.Commands.Create;
 using BookStore.Application.Users.Common.Models;
 using BookStore.Application.Users.Queries.GetUsers;
 using BookStore.Domain.Common.Models;
@@ -20,14 +21,21 @@ public class UsersController : ControllerBase
     }
 
     [HttpPost, AllowAnonymous]
-    public async Task<IActionResult> Create([FromBody] CreateUserCommand createUserCommand,
+    public async Task<IActionResult> Create([FromBody] CreateCommand createCommand,
         CancellationToken cancellationToken)
     {
-        var response = await _mediator.Send(createUserCommand, cancellationToken);
+        var response = await _mediator.Send(createCommand, cancellationToken);
         return response.Match<IActionResult>(
             _ => CreatedAtAction(nameof(GetAll), response.Value),
             BadRequest,
             BadRequest);
+    }
+
+    [HttpPost("login"), AllowAnonymous]
+    public async Task<IActionResult> Login([FromBody] AuthenticateCommand command, CancellationToken cancellationToken)
+    {
+        var response = await _mediator.Send(command, cancellationToken);
+        return response.Match<IActionResult>(Ok, BadRequest);
     }
 
     [HttpGet]

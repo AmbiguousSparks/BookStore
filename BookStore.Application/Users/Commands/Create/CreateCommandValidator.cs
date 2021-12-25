@@ -1,10 +1,10 @@
 using FluentValidation;
 
-namespace BookStore.Application.Users.Commands.CreateUser;
+namespace BookStore.Application.Users.Commands.Create;
 
-public class CreateUserRequestValidator : AbstractValidator<CreateUserCommand>
+public class CreateCommandValidator : AbstractValidator<CreateCommand>
 {
-    public CreateUserRequestValidator()
+    public CreateCommandValidator()
     {
         RuleFor(u => u.FirstName)
             .NotEmpty();
