@@ -20,7 +20,7 @@ public class BooksTests
     {
         //Arrange
         var author = _fixture.Build<Author>()
-            .FromFactory(() => new Author("Daniel", new DateOnly(2000, 8, 23)))
+            .FromFactory(() => new Author("Daniel", "test.png", new DateOnly(2000, 8, 23)))
             .With(a => a.Name, "Daniel")
             .With(b => b.BirthDate, new DateOnly(2000, 8, 23))
             .Create();
@@ -30,11 +30,15 @@ public class BooksTests
             .With(c => c.CategoryName, "Action")
             .Create();
 
-        const string title = "Test Book", description = "Just a Test Book", language = "Portuguese", isbn = "978-855500";
+        const string title = "Test Book",
+            description = "Just a Test Book",
+            language = "Portuguese",
+            isbn = "978-855500",
+            cover = "test.png";
 
 
         //Act
-        var book = new Book(title, description, isbn, author, language,
+        var book = new Book(title, description, isbn, author, language, cover,
             category, new DateOnly(2021, 12, 18),
             BookCoverType.Common, 1, 29.99m);
 
@@ -49,14 +53,15 @@ public class BooksTests
         book.CoverType.Should().Be(BookCoverType.Common);
         book.Edition.Should().Be(1);
         book.Price.Should().Be(29.99m);
+        book.Cover.Should().Be(cover);
     }
-    
+
     [Fact]
     public void Ctor_ShouldCreateNewBookWhenValidParametersAndId()
     {
         //Arrange
         var author = _fixture.Build<Author>()
-            .FromFactory(() => new Author(1, "Daniel", new DateOnly(2000, 8, 23)))
+            .FromFactory(() => new Author(1, "Daniel", "test.png", new DateOnly(2000, 8, 23)))
             .With(a => a.Name, "Daniel")
             .With(b => b.BirthDate, new DateOnly(2000, 8, 23))
             .Create();
@@ -66,11 +71,15 @@ public class BooksTests
             .With(c => c.CategoryName, "Action")
             .Create();
 
-        const string title = "Test Book", description = "Just a Test Book", language = "Portuguese", isbn = "978-855500";
+        const string title = "Test Book",
+            description = "Just a Test Book",
+            language = "Portuguese",
+            isbn = "978-855500",
+            cover = "test.png";
 
 
         //Act
-        var book = new Book(1, title, description, isbn, author, language,
+        var book = new Book(1, title, description, isbn, author, language, cover,
             category, new DateOnly(2021, 12, 18),
             BookCoverType.Common, 1, 29.99m);
 
@@ -86,14 +95,15 @@ public class BooksTests
         book.Edition.Should().Be(1);
         book.Price.Should().Be(29.99m);
         book.Id.Should().Be(1);
+        book.Cover.Should().Be(cover);
     }
-    
+
     [Fact]
     public void Ctor_ShouldThrowWhenCreatingWithInvalidParameters()
     {
         //Arrange
         var author = _fixture.Build<Author>()
-            .FromFactory(() => new Author("Daniel", new DateOnly(2000, 8, 23)))
+            .FromFactory(() => new Author("Daniel", "test.png", new DateOnly(2000, 8, 23)))
             .With(a => a.Name, "Daniel")
             .With(b => b.BirthDate, new DateOnly(2000, 8, 23))
             .Create();
@@ -103,11 +113,16 @@ public class BooksTests
             .With(c => c.CategoryName, "Action")
             .Create();
 
-        const string title = "", description = "Just a Test Book", language = "Portuguese", isbn = "978-855500";
+        const string title = "",
+            description = "Just a Test Book",
+            language = "Portuguese",
+            isbn = "978-855500",
+            cover = "test.png";
+        ;
 
 
         //Act
-        var act = () => new Book(1, title, description, isbn, author, language,
+        var act = () => new Book(1, title, description, isbn, author, language, cover,
             category, new DateOnly(2021, 12, 18),
             BookCoverType.Common, 1, 29.99m);
 
@@ -115,7 +130,6 @@ public class BooksTests
         act.Should()
             .Throw<ArgumentNullException>()
             .WithMessage("Value cannot be null. (Parameter 'Title')");
-
     }
 
     #endregion
@@ -127,7 +141,7 @@ public class BooksTests
     {
         //Arrange
         var author = _fixture.Build<Author>()
-            .FromFactory(() => new Author("Daniel", new DateOnly(2000, 8, 23)))
+            .FromFactory(() => new Author("Daniel", "test.png", new DateOnly(2000, 8, 23)))
             .With(a => a.Name, "Daniel")
             .With(b => b.BirthDate, new DateOnly(2000, 8, 23))
             .Create();
@@ -137,9 +151,13 @@ public class BooksTests
             .With(c => c.CategoryName, "Action")
             .Create();
 
-        const string title = "Test Book", description = "Just a Test Book", language = "Portuguese", isbn = "978-855500";
-        
-        var book = new Book(title, description, isbn, author, language,
+        const string title = "Test Book",
+            description = "Just a Test Book",
+            language = "Portuguese",
+            isbn = "978-855500",
+            cover = "test.png";
+
+        var book = new Book(title, description, isbn, author, language, cover,
             category, new DateOnly(2021, 12, 18),
             BookCoverType.Common, 1, 29.99m);
 
@@ -151,13 +169,13 @@ public class BooksTests
         //Assert
         book.GetEvents().Should().Contain(@event);
     }
-    
+
     [Fact]
     public void RemoveDomainEvent_ShouldRemoveEvent()
     {
         //Arrange
         var author = _fixture.Build<Author>()
-            .FromFactory(() => new Author("Daniel", new DateOnly(2000, 8, 23)))
+            .FromFactory(() => new Author("Daniel", "test.png", new DateOnly(2000, 8, 23)))
             .With(a => a.Name, "Daniel")
             .With(b => b.BirthDate, new DateOnly(2000, 8, 23))
             .Create();
@@ -167,9 +185,13 @@ public class BooksTests
             .With(c => c.CategoryName, "Action")
             .Create();
 
-        const string title = "Test Book", description = "Just a Test Book", language = "Portuguese", isbn = "978-855500";
-        
-        var book = new Book(title, description, isbn, author, language,
+        const string title = "Test Book",
+            description = "Just a Test Book",
+            language = "Portuguese",
+            isbn = "978-855500",
+            cover = "test.png";
+
+        var book = new Book(title, description, isbn, author, language, cover,
             category, new DateOnly(2021, 12, 18),
             BookCoverType.Common, 1, 29.99m);
 
@@ -178,17 +200,17 @@ public class BooksTests
 
         //Act
         book.RemoveDomainEvent(@event);
-        
+
         //Assert
         book.GetEvents().Should().BeEmpty();
     }
-    
+
     [Fact]
     public void GetEvents_ShouldReturnEvents()
     {
         //Arrange
         var author = _fixture.Build<Author>()
-            .FromFactory(() => new Author("Daniel", new DateOnly(2000, 8, 23)))
+            .FromFactory(() => new Author("Daniel", "test.png", new DateOnly(2000, 8, 23)))
             .With(a => a.Name, "Daniel")
             .With(b => b.BirthDate, new DateOnly(2000, 8, 23))
             .Create();
@@ -198,25 +220,28 @@ public class BooksTests
             .With(c => c.CategoryName, "Action")
             .Create();
 
-        const string title = "Test Book", description = "Just a Test Book", language = "Portuguese", isbn = "978-855500";
-        
-        var book = new Book(title, description, isbn, author, language,
+        const string title = "Test Book",
+            description = "Just a Test Book",
+            language = "Portuguese",
+            isbn = "978-855500",
+            cover = "test.png";
+
+        var book = new Book(title, description, isbn, author, language, cover,
             category, new DateOnly(2021, 12, 18),
             BookCoverType.Common, 1, 29.99m);
 
         var @event1 = Substitute.For<IDomainEvent>();
         var @event2 = Substitute.For<IDomainEvent>();
-        
+
         book.AddDomainEvent(@event1);
         book.AddDomainEvent(@event2);
-        
+
         //Act
         var events = book.GetEvents();
-        
+
         //Assert
         events.Should().HaveCount(2);
     }
-    
 
     #endregion
 }

@@ -14,6 +14,7 @@ public class Book : Entity<int>
     private string _language = default!;
     private Category _category = default!;
     private decimal _price;
+    private string _cover = default!;
     
     public Category Category
     {
@@ -54,6 +55,12 @@ public class Book : Entity<int>
         get => _price;
         set => _price = ValidateZero(value);
     }
+    
+    public string Cover
+    {
+        get => _cover;
+        set => _cover = ValidateNullOrEmpty(value);
+    }
 
     #endregion
 
@@ -74,7 +81,7 @@ public class Book : Entity<int>
     {
     }
 
-    public Book(int id, string title, string description, string isbn, Author author, string language, Category category, DateOnly releaseDate, BookCoverType coverType, int edition, decimal price) 
+    public Book(int id, string title, string description, string isbn, Author author, string language, string cover, Category category, DateOnly releaseDate, BookCoverType coverType, int edition, decimal price) 
         : base(id)
     {
         Title = title;
@@ -87,9 +94,10 @@ public class Book : Entity<int>
         CoverType = coverType;
         Edition = edition;
         Price = price;
+        Cover = cover;
     }
 
-    public Book(string title, string description, string isbn, Author author, string language, Category category, DateOnly releaseDate, BookCoverType coverType, int edition, decimal price)
+    public Book(string title, string description, string isbn, Author author, string language, string cover, Category category, DateOnly releaseDate, BookCoverType coverType, int edition, decimal price)
         : this()
     {
         Title = title;
@@ -102,6 +110,7 @@ public class Book : Entity<int>
         CoverType = coverType;
         Edition = edition;
         Price = price;
+        Cover = cover;
     }
 
     #endregion

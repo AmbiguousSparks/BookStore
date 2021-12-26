@@ -15,7 +15,7 @@ namespace BookStore.Data.Tests.Repositories;
 public class DefaultListRepositoryTests
 {
     private readonly IBookStoreDbContext _context;
-    
+
     public DefaultListRepositoryTests()
     {
         var options = new DbContextOptionsBuilder<BookStoreDbContext>()
@@ -32,11 +32,11 @@ public class DefaultListRepositoryTests
 
         var authors = new List<Author>()
         {
-            new("Daniel", new DateOnly(2000, 8, 23)),
-            new("Daniel 1", new DateOnly(2000, 8, 23)),
-            new("Daniel 2", new DateOnly(2000, 8, 23)),
+            new("Daniel", "test.png", new DateOnly(2000, 8, 23)),
+            new("Daniel 1", "test.png", new DateOnly(2000, 8, 23)),
+            new("Daniel 2", "test.png", new DateOnly(2000, 8, 23)),
         };
-        
+
         _context.Set<Author>()
             .AddRange(authors);
         await _context.SaveChangesAsync();
@@ -51,7 +51,7 @@ public class DefaultListRepositoryTests
         enumerable.Length.Should().Be(authors.Count);
         enumerable.Should().BeEquivalentTo(authors);
     }
-    
+
     [Fact]
     public async Task GetAll_ShouldReturnAllTheEntitiesWithCondition()
     {
@@ -59,11 +59,11 @@ public class DefaultListRepositoryTests
 
         var authors = new List<Author>()
         {
-            new("Daniel", new DateOnly(2000, 8, 23)),
-            new("Daniel 1", new DateOnly(2000, 8, 23)),
-            new("Daniel 2", new DateOnly(2000, 8, 23)),
+            new("Daniel", "test.png", new DateOnly(2000, 8, 23)),
+            new("Daniel 1", "test.png", new DateOnly(2000, 8, 23)),
+            new("Daniel 2", "test.png", new DateOnly(2000, 8, 23)),
         };
-        
+
         _context.Set<Author>()
             .AddRange(authors);
         await _context.SaveChangesAsync();

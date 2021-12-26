@@ -13,6 +13,7 @@ namespace BookStore.Data.Tests.Repositories;
 public class DefaultRepositoryTests
 {
     private readonly IBookStoreDbContext _context;
+
     public DefaultRepositoryTests()
     {
         var options = new DbContextOptionsBuilder<BookStoreDbContext>()
@@ -21,15 +22,15 @@ public class DefaultRepositoryTests
 
         _context = new BookStoreDbContext(options);
     }
-    
+
     [Fact]
     public async Task Create_ShouldCreateEntityCorrectly()
     {
         //Arrange
         var repository = new DefaultRepository<Author>(_context);
 
-        var authorToCreate = new Author("Daniel", new DateOnly(2021, 1, 21));
-        
+        var authorToCreate = new Author("Daniel", "test.png", new DateOnly(2021, 1, 21));
+
         //Act
         await repository.Create(authorToCreate);
 
@@ -38,69 +39,69 @@ public class DefaultRepositoryTests
         author.Should().NotBeNull();
         author.Should().BeEquivalentTo(authorToCreate);
     }
-    
+
     [Fact]
     public async Task Get_ShouldReturnCreatedEntity()
     {
         //Arrange
         var repository = new DefaultRepository<Author>(_context);
 
-        var authorToCreate = new Author("Daniel", new DateOnly(2021, 1, 21));
+        var authorToCreate = new Author("Daniel", "test.png", new DateOnly(2021, 1, 21));
         await repository.Create(authorToCreate);
 
         //Act
         var found = await repository.Get(authorToCreate.Id);
-        
+
         //Assert
         found.Should().NotBeNull();
         found.Should().BeEquivalentTo(authorToCreate);
     }
-    
+
     [Fact]
     public async Task Get_ShouldReturnCreatedEntityBasedOnCondition()
     {
         //Arrange
         var repository = new DefaultRepository<Author>(_context);
 
-        var authorToCreate = new Author("Daniel", new DateOnly(2021, 1, 21));
+        var authorToCreate = new Author("Daniel", "test.png", new DateOnly(2021, 1, 21));
         await repository.Create(authorToCreate);
 
         //Act
         var found = await repository.Get(a => a.Name == "Daniel");
-        
+
         //Assert
         found.Should().NotBeNull();
         found.Should().BeEquivalentTo(authorToCreate);
     }
-    
+
     [Fact]
     public async Task Exists_ShouldReturnTrueIfTheEntityIsCreated()
     {
         //Arrange
         var repository = new DefaultRepository<Author>(_context);
 
-        var authorToCreate = new Author("Daniel", new DateOnly(2021, 1, 21));
+        var authorToCreate = new Author("Daniel", "test.png", new DateOnly(2021, 1, 21));
         await repository.Create(authorToCreate);
 
         //Act
         var found = await repository.Exists(a => a.Name == "Daniel");
-        
+
         //Assert
         found.Should().BeTrue();
     }
-    
+
     [Fact]
     public async Task Exists_ShouldReturnFalseIfTheEntityIsCreated()
     {
         //Arrange
         var repository = new DefaultRepository<Author>(_context);
 
-        var authorToCreate = new Author("Daniel", new DateOnly(2021, 1, 21));
+        var authorToCreate = new Author("Daniel", "test.png", new DateOnly(2021, 1, 21));
         await repository.Create(authorToCreate);
 
         //Act
         var found = await repository.Exists(a => a.Name == "Daniel 2");
-        
+
         //Assert
         found.Should().BeFalse();
     }
