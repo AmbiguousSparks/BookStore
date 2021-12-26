@@ -23,6 +23,14 @@ internal class DefaultRepository<TEntity> : Repository<TEntity>, IRepository<TEn
         await DbContext.SaveChangesAsync(cancellationToken);
     }
 
+    public async Task Update(TEntity entity, CancellationToken cancellationToken = default)
+    {
+        All()
+            .Update(entity);
+
+        await DbContext.SaveChangesAsync(cancellationToken);
+    }
+
     public ValueTask<TEntity> Get(int id, CancellationToken cancellationToken = default)
     {
         return All().FindAsync(new object?[] { id }, cancellationToken)!;
