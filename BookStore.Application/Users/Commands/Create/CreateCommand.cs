@@ -9,6 +9,7 @@ using BookStore.Domain.Common.Repositories.Interfaces;
 using BookStore.Domain.Models.Enums;
 using BookStore.Domain.Models.Users;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
 using OneOf;
 
 namespace BookStore.Application.Users.Commands.Create;
@@ -24,12 +25,14 @@ public class CreateCommand : UserInDto, IRequest<OneOf<UserToken, InvalidPropert
         private readonly IMapper _mapper;
         private readonly IRepository<User> _userRepository;
         private readonly IMediator _mediator;
+        private readonly IPasswordHasher<User> _hasher;
 
-        public CreateUserCommandHandler(IMapper mapper, IRepository<User> userRepository, IMediator mediator)
+        public CreateUserCommandHandler(IMapper mapper, IRepository<User> userRepository, IMediator mediator, IPasswordHasher<User> hasher)
         {
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+            _hasher = hasher ?? throw new ArgumentNullException(nameof(hasher));
         }
 
         public async Task<OneOf<UserToken, InvalidProperty, EntityAlreadyExists>> Handle(CreateCommand request,
@@ -44,10 +47,12 @@ public class CreateCommand : UserInDto, IRequest<OneOf<UserToken, InvalidPropert
 
                 var userModel = _mapper.Map<User>(request);
 
+                userModel.Password = _hasher.HashPassword(userModel, userModel.Password);
+
                 userModel.Type = UserType.Admin;
 
                 userModel.AddDomainEvent(new UserCreatedEvent());
-
+                
                 await _userRepository.Create(userModel, cancellationToken);
 
                 await _mediator.DispatchDomainEvents(userModel);

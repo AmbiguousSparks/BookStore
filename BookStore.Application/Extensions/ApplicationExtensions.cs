@@ -7,9 +7,11 @@ using BookStore.Application.HealthChecks;
 using BookStore.Application.Profiles;
 using BookStore.Domain.Common.Models;
 using BookStore.Domain.Common.Services;
+using BookStore.Domain.Models.Users;
 using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.StackExchangeRedis;
 using Microsoft.Extensions.Configuration;
@@ -62,6 +64,8 @@ public static class ApplicationExtensions
         services.AddSingleton(tokenConfig);
         
         services.AddScoped<IAuthService, AuthService>();
+
+        services.AddSingleton<IPasswordHasher<User>, PasswordHasher<User>>();
         
         services.AddSingleton(tokenValidationParameters);
 
@@ -75,7 +79,7 @@ public static class ApplicationExtensions
             jwt.SaveToken = true;
             jwt.TokenValidationParameters = tokenValidationParameters;
         });
-
+        
         return services;
     }
 
