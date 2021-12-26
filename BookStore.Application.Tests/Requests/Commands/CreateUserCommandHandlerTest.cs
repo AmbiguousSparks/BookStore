@@ -13,6 +13,7 @@ using BookStore.Domain.Models.Enums;
 using BookStore.Domain.Models.Users;
 using FluentAssertions;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
 using NSubstitute;
 using Xunit;
 
@@ -23,8 +24,7 @@ public class CreateUserCommandHandlerTest
     private readonly IMediator _mediator = Substitute.For<IMediator>();
     private readonly IRepository<User> _repository = Substitute.For<IRepository<User>>();
     private readonly IMapper _mapper = Substitute.For<IMapper>();
-
-    [Fact]
+    private readonly IPasswordHasher<User> _hasher = Substitute.For<IPasswordHasher<User>>();
     public async Task Handle_ShouldCreateNewUser()
     {
         //Arrange
@@ -35,7 +35,7 @@ public class CreateUserCommandHandlerTest
         _mediator.Send(Arg.Any<GetUserTokenQuery>(), Arg.Any<CancellationToken>())
             .ReturnsForAnyArgs(new UserToken());
 
-        var handler = new CreateCommand.CreateUserCommandHandler(_mapper, _repository, _mediator);
+        var handler = new CreateCommand.CreateUserCommandHandler(_mapper, _repository, _mediator, _hasher);
 
         //Act
         var response = await handler.Handle(new CreateCommand(), CancellationToken.None);
@@ -58,7 +58,7 @@ public class CreateUserCommandHandlerTest
         _mapper.Map<User>(Arg.Any<CreateCommand>()).Returns(user);
 
         var handler =
-            new CreateCommand.CreateUserCommandHandler(_mapper, _repository, _mediator);
+            new CreateCommand.CreateUserCommandHandler(_mapper, _repository, _mediator, _hasher);
 
         //Act
         var response = await handler.Handle(new CreateCommand(), CancellationToken.None);

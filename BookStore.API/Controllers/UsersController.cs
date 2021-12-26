@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BookStore.API.Controllers;
 
-[ApiController, Route("api/[controller]"), Authorize(Roles = AuthConstants.AdministratorRole)]
+[ApiController, Route("api/[controller]"), Authorize(AuthConstants.AdministratorPolicy)]
 public class UsersController : ControllerBase
 {
     private readonly IMediator _mediator;
