@@ -26,6 +26,9 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Authors\Queries" />
+      <Folder Include="Books\Commands" />
+      <Folder Include="Books\Queries" />
       <Folder Include="Common\Abstracts" />
     </ItemGroup>
 

@@ -55,7 +55,7 @@ public class CreateCommand : UserInDto, IRequest<OneOf<UserToken, InvalidPropert
                 
                 await _userRepository.Create(userModel, cancellationToken);
 
-                await _mediator.DispatchDomainEvents(userModel);
+                await _mediator.DispatchDomainEvents(userModel, cancellationToken);
 
                 return await _mediator.Send(new GetUserTokenQuery {User = userModel}, cancellationToken);
             }
