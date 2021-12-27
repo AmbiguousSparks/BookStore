@@ -10,7 +10,7 @@ using OneOf;
 
 namespace BookStore.Application.Authors.Commands.Update;
 
-public class UpdateAuthorCommand : AuthorInDto, IRequest<OneOf<Unit, EntityNotFound, InvalidProperty>>
+public class UpdateAuthorCommand : AuthorDto, IRequest<OneOf<Unit, EntityNotFound, InvalidProperty>>
 {
     public int Id { get; set; }
     
@@ -33,10 +33,10 @@ public class UpdateAuthorCommand : AuthorInDto, IRequest<OneOf<Unit, EntityNotFo
         {
             try
             {
-                var author = await _repository.Get(request.Id, cancellationToken);
-
-                if (author is null)
+                if (!await _repository.Exists(a => a.Id == request.Id, cancellationToken))
                     return new EntityNotFound(nameof(Author));
+                
+                var author = await _repository.Get(request.Id, cancellationToken);
 
                 author = _mapper.Map<Author>(request);
 

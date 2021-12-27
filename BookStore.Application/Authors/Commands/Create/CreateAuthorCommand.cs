@@ -10,7 +10,7 @@ using OneOf;
 
 namespace BookStore.Application.Authors.Commands.Create;
 
-public class CreateAuthorCommand : AuthorInDto, IRequest<OneOf<Unit, InvalidProperty>>
+public class CreateAuthorCommand : AuthorDto, IRequest<OneOf<Unit, InvalidProperty>>
 {
     internal class CreateAuthorCommandHandler : 
         IRequestHandler<CreateAuthorCommand, OneOf<Unit, InvalidProperty>>
