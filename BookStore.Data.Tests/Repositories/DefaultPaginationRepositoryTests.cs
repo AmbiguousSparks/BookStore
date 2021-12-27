@@ -32,9 +32,9 @@ public class DefaultPaginationRepositoryTests
 
         var authors = new List<Author>
         {
-            new("Daniel 2", "test.png", new DateOnly(2000, 8, 23)),
-            new("Daniel", "test.png", new DateOnly(2000, 8, 23)),
-            new("Daniel 1", "test.png", new DateOnly(2000, 8, 23)),
+            new("Daniel 2", "test.png", new DateTime(2000, 8, 23)),
+            new("Daniel", "test.png", new DateTime(2000, 8, 23)),
+            new("Daniel 1", "test.png", new DateTime(2000, 8, 23)),
         };
 
         _context.Set<Author>()
@@ -60,9 +60,9 @@ public class DefaultPaginationRepositoryTests
 
         var authors = new List<Author>
         {
-            new("Daniel", "test.png", new DateOnly(2000, 8, 23)),
-            new("Daniel 1", "test.png", new DateOnly(2000, 8, 23)),
-            new("Daniel 2", "test.png", new DateOnly(2000, 8, 23)),
+            new("Daniel", "test.png", new DateTime(2000, 8, 23)),
+            new("Daniel 1", "test.png", new DateTime(2000, 8, 23)),
+            new("Daniel 2", "test.png", new DateTime(2000, 8, 23)),
         };
 
         _context.Set<Author>()

@@ -9,12 +9,12 @@ using OneOf;
 
 namespace BookStore.Application.Users.Commands.Authenticate;
 
-public class AuthenticateCommand : IRequest<OneOf<UserToken, InvalidCredentials>>
+public class AuthenticateUserCommand : IRequest<OneOf<UserToken, InvalidCredentials>>
 {
     public string Email { get; set; } = default!;
     public string Password { get; set; } = default!;
 
-    internal class AuthenticateCommandHandler : IRequestHandler<AuthenticateCommand,
+    internal class AuthenticateCommandHandler : IRequestHandler<AuthenticateUserCommand,
         OneOf<UserToken, InvalidCredentials>>
     {
         private readonly IMediator _mediator;
@@ -30,7 +30,7 @@ public class AuthenticateCommand : IRequest<OneOf<UserToken, InvalidCredentials>
         }
 
         public async Task<OneOf<UserToken, InvalidCredentials>>
-            Handle(AuthenticateCommand request, CancellationToken cancellationToken)
+            Handle(AuthenticateUserCommand request, CancellationToken cancellationToken)
         {
             if (!await _userRepository.Exists(u => u.Email == request.Email, cancellationToken))
                 return new InvalidCredentials();

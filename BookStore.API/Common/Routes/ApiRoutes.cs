@@ -9,4 +9,9 @@ public static class ApiRoutes
         public const string Authenticate = "api/Users/Login";
         public const string GetPaged = "api/Users/Paged";
     }
+
+    public static class AuthorsManagement
+    {
+        public const string Create = "api/AuthorsManagement";
+    }
 }

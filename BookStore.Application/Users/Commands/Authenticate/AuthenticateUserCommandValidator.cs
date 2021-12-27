@@ -2,9 +2,9 @@ using FluentValidation;
 
 namespace BookStore.Application.Users.Commands.Authenticate;
 
-public class AuthenticateCommandValidator : AbstractValidator<AuthenticateCommand>
+public class AuthenticateUserCommandValidator : AbstractValidator<AuthenticateUserCommand>
 {
-    public AuthenticateCommandValidator()
+    public AuthenticateUserCommandValidator()
     {
         RuleFor(a => a.Email)
             .EmailAddress()

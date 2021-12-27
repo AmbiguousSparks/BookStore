@@ -22,21 +22,21 @@ public class CreateAuthorCommandHandlerTest
     public async Task Handle_ShouldCreateNewAuthor()
     {
         //Arrange
-        var author = new Author("Test", "test.png", new DateOnly(2000, 8, 23));
-        _mapper.Map<Author>(Arg.Any<CreateCommand>())
+        var author = new Author("Test", "test.png", new DateTime(2000, 8, 23));
+        _mapper.Map<Author>(Arg.Any<CreateAuthorCommand>())
             .ReturnsForAnyArgs(author);
-        var handler = new CreateCommand.CreateAuthorCommandHandler(_mapper, _repository, _mediator);
+        var handler = new CreateAuthorCommand.CreateAuthorCommandHandler(_mapper, _repository, _mediator);
 
         //Act
-        await handler.Handle(new CreateCommand
+        await handler.Handle(new CreateAuthorCommand
         {
             Name = "Test",
             Photo = "test.png",
-            BirthDate = new DateOnly(2000, 8, 23)
+            BirthDate = new DateTime(2000, 8, 23)
         }, CancellationToken.None);
 
         //Assert
-        _mapper.ReceivedWithAnyArgs(1).Map<Author>(Arg.Any<CreateCommand>());
+        _mapper.ReceivedWithAnyArgs(1).Map<Author>(Arg.Any<CreateAuthorCommand>());
         await _repository.ReceivedWithAnyArgs(1).Create(Arg.Any<Author>(), Arg.Any<CancellationToken>());
         await _mediator.ReceivedWithAnyArgs(1).DispatchDomainEvents(author, Arg.Any<CancellationToken>());
     } 

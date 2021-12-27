@@ -36,10 +36,10 @@ public class AuthenticateUserCommandTest
         _hasher.VerifyHashedPassword(Arg.Any<User>(), Arg.Any<string>(), Arg.Any<string>())
             .ReturnsForAnyArgs(PasswordVerificationResult.Success);
 
-        var handler = new AuthenticateCommand.AuthenticateCommandHandler(_mediator, _repository, _hasher);
+        var handler = new AuthenticateUserCommand.AuthenticateCommandHandler(_mediator, _repository, _hasher);
 
         //Act
-        var response = await handler.Handle(new AuthenticateCommand
+        var response = await handler.Handle(new AuthenticateUserCommand
         {
             Email = "test@gmail.com",
             Password = "JUST4T3ST"
@@ -56,10 +56,10 @@ public class AuthenticateUserCommandTest
         //Arrange
         _repository.Exists(Arg.Any<Expression<Func<User, bool>>>()).ReturnsForAnyArgs(false);
         
-        var handler = new AuthenticateCommand.AuthenticateCommandHandler(_mediator, _repository, _hasher);
+        var handler = new AuthenticateUserCommand.AuthenticateCommandHandler(_mediator, _repository, _hasher);
 
         //Act
-        var response = await handler.Handle(new AuthenticateCommand
+        var response = await handler.Handle(new AuthenticateUserCommand
         {
             Email = "test@gmail.com",
             Password = "JUST4T3ST"
@@ -81,10 +81,10 @@ public class AuthenticateUserCommandTest
         _hasher.VerifyHashedPassword(Arg.Any<User>(), Arg.Any<string>(), Arg.Any<string>())
             .ReturnsForAnyArgs(PasswordVerificationResult.Failed);
         
-        var handler = new AuthenticateCommand.AuthenticateCommandHandler(_mediator, _repository, _hasher);
+        var handler = new AuthenticateUserCommand.AuthenticateCommandHandler(_mediator, _repository, _hasher);
 
         //Act
-        var response = await handler.Handle(new AuthenticateCommand
+        var response = await handler.Handle(new AuthenticateUserCommand
         {
             Email = "test@gmail.com",
             Password = "JUST4T3ST"

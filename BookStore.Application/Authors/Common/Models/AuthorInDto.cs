@@ -7,5 +7,5 @@ public class AuthorInDto : IMapFrom<Author>
 {
     public string Name { get; set; } = default!;
     public string Photo { get; set; } = default!;
-    public DateOnly BirthDate { get; set; }
+    public DateTime BirthDate { get; set; }
 }

@@ -1,4 +1,5 @@
 using BookStore.API.Common.Auth;
+using BookStore.API.Controllers.Abstracts;
 using BookStore.Application.Users.Commands.Authenticate;
 using BookStore.Application.Users.Commands.Create;
 using BookStore.Application.Users.Common.Models;
@@ -11,20 +12,17 @@ using Microsoft.AspNetCore.Mvc;
 namespace BookStore.API.Controllers;
 
 [ApiController, Route("api/[controller]"), Authorize(AuthConstants.AdministratorPolicy)]
-public class UsersController : ControllerBase
+public class UsersController : BaseApiController
 {
-    private readonly IMediator _mediator;
-
-    public UsersController(IMediator mediator)
+    public UsersController(IMediator mediator) : base(mediator)
     {
-        _mediator = mediator;
     }
 
     [HttpPost, AllowAnonymous]
-    public async Task<IActionResult> Create([FromBody] CreateCommand createCommand,
+    public async Task<IActionResult> Create([FromBody] CreateUserCommand createUserCommand,
         CancellationToken cancellationToken)
     {
-        var response = await _mediator.Send(createCommand, cancellationToken);
+        var response = await Mediator.Send(createUserCommand, cancellationToken);
         return response.Match<IActionResult>(
             _ => CreatedAtAction(nameof(GetAll), response.Value),
             BadRequest,
@@ -32,21 +30,21 @@ public class UsersController : ControllerBase
     }
 
     [HttpPost("login"), AllowAnonymous]
-    public async Task<IActionResult> Login([FromBody] AuthenticateCommand command, CancellationToken cancellationToken)
+    public async Task<IActionResult> Login([FromBody] AuthenticateUserCommand userCommand, CancellationToken cancellationToken)
     {
-        var response = await _mediator.Send(command, cancellationToken);
+        var response = await Mediator.Send(userCommand, cancellationToken);
         return response.Match<IActionResult>(Ok, BadRequest);
     }
 
     [HttpGet]
     public async Task<IEnumerable<UserOutDto>> GetAll([FromQuery] GetAllUsersQuery query, CancellationToken cancellationToken)
     {
-        return await _mediator.Send(query, cancellationToken);
+        return await Mediator.Send(query, cancellationToken);
     }
     
     [HttpGet("paged")]
     public async Task<PaginationInfo<UserOutDto>> GetPaged([FromQuery] GetPagedUsersQuery query, CancellationToken cancellationToken)
     {
-        return await _mediator.Send(query, cancellationToken);
+        return await Mediator.Send(query, cancellationToken);
     }
 }

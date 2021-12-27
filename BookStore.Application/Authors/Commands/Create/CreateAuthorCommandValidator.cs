@@ -2,9 +2,9 @@ using FluentValidation;
 
 namespace BookStore.Application.Authors.Commands.Create;
 
-public class CreateCommandValidator : AbstractValidator<CreateCommand>
+public class CreateAuthorCommandValidator : AbstractValidator<CreateAuthorCommand>
 {
-    public CreateCommandValidator()
+    public CreateAuthorCommandValidator()
     {
         RuleFor(a => a.Name)
             .NotEmpty();

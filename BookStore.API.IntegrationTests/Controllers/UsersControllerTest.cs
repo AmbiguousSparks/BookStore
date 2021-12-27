@@ -16,8 +16,8 @@ using Xunit;
 
 namespace BookStore.API.IntegrationTests.Controllers;
 
-public class UsersControllerTest : IntegrationTest
-{
+public class UsersControllerTest : IntegrationTest<UsersControllerTest>
+ {
     [Fact]
     public async Task GetAll_ShouldReturnAllUsers()
     {
@@ -87,7 +87,7 @@ public class UsersControllerTest : IntegrationTest
         await Task.WhenAll(tasks);
         
         //Act
-        var response = await TestClient.PostAsJsonAsync(ApiRoutes.Users.Authenticate, new AuthenticateCommand
+        var response = await TestClient.PostAsJsonAsync(ApiRoutes.Users.Authenticate, new AuthenticateUserCommand
         {
             Email = "test@gmail.com",
             Password = "S0M3P@SSword"
@@ -105,7 +105,7 @@ public class UsersControllerTest : IntegrationTest
         //Arrange
        
         //Act
-        var response = await TestClient.PostAsJsonAsync(ApiRoutes.Users.Authenticate, new AuthenticateCommand
+        var response = await TestClient.PostAsJsonAsync(ApiRoutes.Users.Authenticate, new AuthenticateUserCommand
         {
             Email = "test@gmail.com",
             Password = "S0M3P@SSword1213213"
@@ -120,7 +120,7 @@ public class UsersControllerTest : IntegrationTest
     private async Task CreateTestUser(string email)
     {
         var res = await TestClient.PostAsJsonAsync(ApiRoutes.Users.Create,
-            new CreateCommand()
+            new CreateUserCommand()
             {
                 Email = email,
                 Password = "S0M3P@SSword",

@@ -17,7 +17,7 @@ using NSubstitute;
 
 namespace BookStore.API.IntegrationTests;
 
-public class IntegrationTest : IDisposable
+public class IntegrationTest<T> : IDisposable
 {
     protected HttpClient TestClient { get; }
     protected ICacheService CacheService { get; }
@@ -39,7 +39,7 @@ public class IntegrationTest : IDisposable
                     services.RemoveAll(typeof(ICacheService));
                     services.AddScoped(_ => CacheService);
                     services.AddDbContext<BookStoreDbContext>(c =>
-                        c.UseInMemoryDatabase("TestIntegration"));
+                        c.UseInMemoryDatabase(typeof(T).Name));
                     services
                         .AddScoped<IBookStoreDbContext>(provider =>
                             provider.GetRequiredService<BookStoreDbContext>());
@@ -57,7 +57,7 @@ public class IntegrationTest : IDisposable
     private async Task<string> GetJwtAsync()
     {
         var response = await TestClient.PostAsJsonAsync(ApiRoutes.Users.Create,
-            new CreateCommand
+            new CreateUserCommand
             {
                 Email = "test@integration.com",
                 Password = "S0M3P@SSword",

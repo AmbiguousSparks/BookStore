@@ -25,7 +25,7 @@ public class Author : Entity<int>
 
     #region Properties
 
-    public DateOnly BirthDate { get; set; }
+    public DateTime BirthDate { get; set; }
 
     #endregion
 
@@ -35,14 +35,14 @@ public class Author : Entity<int>
     {
     }
     
-    public Author(int id, string name, string photo, DateOnly birthDate) : base(id)
+    public Author(int id, string name, string photo, DateTime birthDate) : base(id)
     {
         Name = name;
         Photo = photo;
         BirthDate = birthDate;
     }
 
-    public Author(string name, string photo, DateOnly birthDate)
+    public Author(string name, string photo, DateTime birthDate)
         : this()
     {
         Name = name;

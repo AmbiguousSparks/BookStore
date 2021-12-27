@@ -29,7 +29,7 @@ public class DefaultRepositoryTests
         //Arrange
         var repository = new DefaultRepository<Author>(_context);
 
-        var authorToCreate = new Author("Daniel", "test.png", new DateOnly(2021, 1, 21));
+        var authorToCreate = new Author("Daniel", "test.png", new DateTime(2021, 1, 21));
 
         //Act
         await repository.Create(authorToCreate);
@@ -46,7 +46,7 @@ public class DefaultRepositoryTests
         //Arrange
         var repository = new DefaultRepository<Author>(_context);
 
-        var authorToCreate = new Author("Daniel", "test.png", new DateOnly(2021, 1, 21));
+        var authorToCreate = new Author("Daniel", "test.png", new DateTime(2021, 1, 21));
         await repository.Create(authorToCreate);
 
         //Act
@@ -63,7 +63,7 @@ public class DefaultRepositoryTests
         //Arrange
         var repository = new DefaultRepository<Author>(_context);
 
-        var authorToCreate = new Author("Daniel", "test.png", new DateOnly(2021, 1, 21));
+        var authorToCreate = new Author("Daniel", "test.png", new DateTime(2021, 1, 21));
         await repository.Create(authorToCreate);
 
         //Act
@@ -80,7 +80,7 @@ public class DefaultRepositoryTests
         //Arrange
         var repository = new DefaultRepository<Author>(_context);
 
-        var authorToCreate = new Author("Daniel", "test.png", new DateOnly(2021, 1, 21));
+        var authorToCreate = new Author("Daniel", "test.png", new DateTime(2021, 1, 21));
         await repository.Create(authorToCreate);
 
         //Act
@@ -96,7 +96,7 @@ public class DefaultRepositoryTests
         //Arrange
         var repository = new DefaultRepository<Author>(_context);
 
-        var authorToCreate = new Author("Daniel", "test.png", new DateOnly(2021, 1, 21));
+        var authorToCreate = new Author("Daniel", "test.png", new DateTime(2021, 1, 21));
         await repository.Create(authorToCreate);
 
         //Act

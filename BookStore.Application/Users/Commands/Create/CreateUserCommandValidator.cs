@@ -2,7 +2,7 @@ using FluentValidation;
 
 namespace BookStore.Application.Users.Commands.Create;
 
-public class CreateCommandValidator : AbstractValidator<CreateCommand>
+public class CreateCommandValidator : AbstractValidator<CreateUserCommand>
 {
     public CreateCommandValidator()
     {

@@ -14,12 +14,12 @@ using OneOf;
 
 namespace BookStore.Application.Users.Commands.Create;
 
-public class CreateCommand : UserInDto, IRequest<OneOf<UserToken, InvalidProperty, EntityAlreadyExists>>
+public class CreateUserCommand : UserInDto, IRequest<OneOf<UserToken, InvalidProperty, EntityAlreadyExists>>
 {
     public string ConfirmPassword { get; set; } = default!;
     private UserType Type { get; set; }
 
-    internal class CreateUserCommandHandler : IRequestHandler<CreateCommand,
+    internal class CreateUserCommandHandler : IRequestHandler<CreateUserCommand,
         OneOf<UserToken, InvalidProperty, EntityAlreadyExists>>
     {
         private readonly IMapper _mapper;
@@ -35,7 +35,7 @@ public class CreateCommand : UserInDto, IRequest<OneOf<UserToken, InvalidPropert
             _hasher = hasher ?? throw new ArgumentNullException(nameof(hasher));
         }
 
-        public async Task<OneOf<UserToken, InvalidProperty, EntityAlreadyExists>> Handle(CreateCommand request,
+        public async Task<OneOf<UserToken, InvalidProperty, EntityAlreadyExists>> Handle(CreateUserCommand request,
             CancellationToken cancellationToken)
         {
             try
