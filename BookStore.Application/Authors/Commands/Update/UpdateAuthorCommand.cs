@@ -13,8 +13,8 @@ namespace BookStore.Application.Authors.Commands.Update;
 public class UpdateAuthorCommand : AuthorDto, IRequest<OneOf<Unit, EntityNotFound, InvalidProperty>>
 {
     public int Id { get; set; }
-    
-    internal class UpdateAuthorCommandHandler 
+
+    internal class UpdateAuthorCommandHandler
         : IRequestHandler<UpdateAuthorCommand, OneOf<Unit, EntityNotFound, InvalidProperty>>
     {
         private readonly IMediator _mediator;
@@ -28,20 +28,18 @@ public class UpdateAuthorCommand : AuthorDto, IRequest<OneOf<Unit, EntityNotFoun
             _mapper = mapper;
         }
 
-        public async Task<OneOf<Unit, EntityNotFound, InvalidProperty>> 
+        public async Task<OneOf<Unit, EntityNotFound, InvalidProperty>>
             Handle(UpdateAuthorCommand request, CancellationToken cancellationToken)
         {
             try
             {
                 if (!await _repository.Exists(a => a.Id == request.Id, cancellationToken))
                     return new EntityNotFound(nameof(Author));
-                
-                var author = await _repository.Get(request.Id, cancellationToken);
 
-                author = _mapper.Map<Author>(request);
+                var author = _mapper.Map<Author>(request);
 
                 await _repository.Update(author, cancellationToken);
-                
+
                 author.AddDomainEvent(new AuthorUpdatedEvent
                 {
                     Id = author.Id
@@ -50,7 +48,6 @@ public class UpdateAuthorCommand : AuthorDto, IRequest<OneOf<Unit, EntityNotFoun
                 await _mediator.DispatchDomainEvents(author, cancellationToken);
 
                 return Unit.Value;
-
             }
             catch (ArgumentNullException e)
             {

@@ -23,12 +23,12 @@ internal class DefaultRepository<TEntity> : Repository<TEntity>, IRepository<TEn
         await DbContext.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task Update(TEntity entity, CancellationToken cancellationToken = default)
+    public Task Update(TEntity entity, CancellationToken cancellationToken = default)
     {
         All()
             .Update(entity);
-
-        await DbContext.SaveChangesAsync(cancellationToken);
+        
+        return DbContext.SaveChangesAsync(cancellationToken);
     }
 
     public ValueTask<TEntity?> Get(int id, CancellationToken cancellationToken = default)
@@ -38,11 +38,11 @@ internal class DefaultRepository<TEntity> : Repository<TEntity>, IRepository<TEn
 
     public Task<TEntity> Get(Expression<Func<TEntity, bool>> condition, CancellationToken cancellationToken = default)
     {
-        return All().FirstAsync(condition, cancellationToken);
+        return All().AsNoTracking().FirstAsync(condition, cancellationToken);
     }
 
     public Task<bool> Exists(Expression<Func<TEntity, bool>> condition, CancellationToken cancellationToken = default)
     {
-        return All().AnyAsync(condition, cancellationToken);
+        return All().AsNoTracking().AnyAsync(condition, cancellationToken);
     }
 }
