@@ -21,14 +21,20 @@ public class CachePipeline<TRequest, TResponse> : IPipelineBehavior<TRequest, TR
             cacheAttribute)
             return await next();
 
-        var cachedValue = await _cacheService.GetAsync<TResponse>(cacheAttribute.Key, cancellationToken);
+        try
+        {
+            var cachedValue = await _cacheService.GetAsync<TResponse>(cacheAttribute.Key, cancellationToken);
+            if (cachedValue is not null)
+                return cachedValue;
 
-        if (cachedValue is not null)
-            return cachedValue;
-
-        var response = await next();
-        await _cacheService.SetAsync(cacheAttribute.Key, response, TimeSpan.FromSeconds(cacheAttribute.CachedTime),
-            cancellationToken);
-        return response;
+            var response = await next();
+            await _cacheService.SetAsync(cacheAttribute.Key, response, TimeSpan.FromSeconds(cacheAttribute.CachedTime),
+                cancellationToken);
+            return response;
+        }
+        catch (Exception)
+        {
+            return await next();
+        }
     }
 }
