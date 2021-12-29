@@ -2,6 +2,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using BookStore.Application.Authentication.Services;
+using BookStore.Application.Cache.Config;
 using BookStore.Application.Cache.Services;
 using BookStore.Application.HealthChecks;
 using BookStore.Application.Profiles;
@@ -16,6 +17,7 @@ using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.StackExchangeRedis;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.IdentityModel.Tokens;
 
 [assembly: InternalsVisibleTo("BookStore.Application.Tests")]
@@ -33,13 +35,25 @@ public static class ApplicationExtensions
             .AddFluentValidation();
 
 
-    private static IServiceCollection AddRedisServices(this IServiceCollection services, IConfiguration configuration) =>
+    private static IServiceCollection AddRedisServices(this IServiceCollection services, IConfiguration configuration)
+    {
+        var config = configuration.GetSection(nameof(RedisConnection)).Get<RedisConnection>() 
+                     ?? new RedisConnection
+                     {
+                         Host = "localhost",
+                         Port = 6379
+                     };
+
         services
             .AddScoped<ICacheService, RedisCacheService>()
             .AddSingleton<IDistributedCache>(x => new RedisCache(new RedisCacheOptions
             {
-                Configuration = configuration.GetValue<string>("RedisConnection")
-            }));
+                Configuration = $"{config.Host}:{config.Port}"
+            }))
+            .TryAddSingleton(config);
+
+        return services;
+    }
 
     public static IHealthChecksBuilder AddApplicationChecks(this IHealthChecksBuilder builder) =>
         builder.AddCheck<RedisHealthCheck>("Redis");
@@ -62,11 +76,11 @@ public static class ApplicationExtensions
         };
 
         services.AddSingleton(tokenConfig);
-        
+
         services.AddScoped<IAuthService, AuthService>();
 
         services.AddSingleton<IPasswordHasher<User>, PasswordHasher<User>>();
-        
+
         services.AddSingleton(tokenValidationParameters);
 
         services.AddAuthentication(opt =>
@@ -79,7 +93,7 @@ public static class ApplicationExtensions
             jwt.SaveToken = true;
             jwt.TokenValidationParameters = tokenValidationParameters;
         });
-        
+
         return services;
     }
 
