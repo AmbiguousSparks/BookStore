@@ -1,6 +1,7 @@
 using BookStore.Application.Cache;
 using BookStore.Domain.Common.Services;
 using MediatR;
+using Newtonsoft.Json;
 
 namespace BookStore.Application.Pipelines;
 
@@ -23,12 +24,14 @@ public class CachePipeline<TRequest, TResponse> : IPipelineBehavior<TRequest, TR
 
         try
         {
-            var cachedValue = await _cacheService.GetAsync<TResponse>(cacheAttribute.Key, cancellationToken);
+            var key = GetKey(request, cacheAttribute.CacheGroup);
+            
+            var cachedValue = await _cacheService.GetAsync<TResponse>(key, cancellationToken);
             if (cachedValue is not null)
                 return cachedValue;
-
+            
             var response = await next();
-            await _cacheService.SetAsync(cacheAttribute.Key, response, TimeSpan.FromSeconds(cacheAttribute.CachedTime),
+            await _cacheService.SetAsync(key, response, TimeSpan.FromSeconds(cacheAttribute.CachedTime),
                 cancellationToken);
             return response;
         }
@@ -36,5 +39,11 @@ public class CachePipeline<TRequest, TResponse> : IPipelineBehavior<TRequest, TR
         {
             return await next();
         }
+    }
+
+    private static string GetKey(TRequest request, string cacheGroup)
+    {
+        var jsonKey = JsonConvert.SerializeObject(request);
+        return $"{cacheGroup} | {typeof(TRequest).Name} | {jsonKey}";
     }
 }

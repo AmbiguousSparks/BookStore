@@ -51,7 +51,7 @@ public class CreateCommand : UserInDto, IRequest<OneOf<UserToken, InvalidPropert
 
                 userModel.Type = UserType.Admin;
 
-                userModel.AddDomainEvent(new UserCreatedEvent());
+                userModel.AddDomainEvent(new UsersUpdatedEvent());
                 
                 await _userRepository.Create(userModel, cancellationToken);
 
