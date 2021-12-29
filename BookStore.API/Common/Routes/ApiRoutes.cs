@@ -13,5 +13,8 @@ public static class ApiRoutes
     public static class AuthorsManagement
     {
         public const string Create = "api/AuthorsManagement";
+        public const string GetAll = "api/AuthorsManagement";
+        public const string GetPaged = "api/AuthorsManagement/paged";
+        public const string Update = "api/AuthorsManagement";
     }
 }
