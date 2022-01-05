@@ -5,12 +5,12 @@ namespace BookStore.Application.Cache;
 [AttributeUsage(AttributeTargets.Class)]
 public class CachedAttribute : Attribute
 {
-    public string Key { get; }
     public int CachedTime { get; }
+    public string CacheGroup { get; set; }
 
-    public CachedAttribute(int cachedTime, string key)
+    public CachedAttribute(int cachedTime, string cacheGroup)
     {
         CachedTime = cachedTime;
-        Key = key;
+        CacheGroup = cacheGroup;
     }
 }

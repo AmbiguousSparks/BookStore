@@ -2,6 +2,7 @@ using System;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using BookStore.Application.Cache.Config;
 using BookStore.Application.Cache.Services;
 using BookStore.Domain.Models.Enums;
 using BookStore.Domain.Models.Users;
@@ -23,7 +24,7 @@ public class CacheServiceTests
         //Arrange
         const string cacheValue = "this is a cache value";
         const string cacheKey = "ThisIsAKey";
-        var cacheService = new RedisCacheService(_distributedCache);
+        var cacheService = new RedisCacheService(_distributedCache, new RedisConnection());
 
         //Act
         await cacheService.SetAsync(cacheKey, cacheValue, TimeSpan.FromHours(1));
@@ -43,7 +44,7 @@ public class CacheServiceTests
         var jsonUser = JsonConvert.SerializeObject(user);
 
         const string cacheKey = "ThisIsAKey";
-        var cacheService = new RedisCacheService(_distributedCache);
+        var cacheService = new RedisCacheService(_distributedCache, new RedisConnection());
         _distributedCache.GetAsync(Arg.Any<string>()).ReturnsForAnyArgs(Encoding.UTF8.GetBytes(jsonUser));
 
         //Act

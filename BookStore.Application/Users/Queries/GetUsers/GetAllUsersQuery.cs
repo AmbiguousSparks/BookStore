@@ -7,7 +7,7 @@ using MediatR;
 
 namespace BookStore.Application.Users.Queries.GetUsers;
 
-[Cached(120, nameof(GetAllUsersQuery))]
+[Cached(120, "Users")]
 public class GetAllUsersQuery : IRequest<IEnumerable<UserOutDto>>
 {
     internal class GetAllUsersQueryHandler : IRequestHandler<GetAllUsersQuery, IEnumerable<UserOutDto>>
